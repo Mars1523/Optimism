@@ -2,7 +2,7 @@
 //when y pressed -> arm moves in
 //when x+y released -> arm stop moving
 
-//should be finished
+//second
 
 package frc.robot.commands;
 
@@ -12,13 +12,13 @@ import frc.robot.subsystems.Arms;
 
 public class DefaultArms extends CommandBase {
 
-  private XboxController primaryController;
+  private XboxController secondaryController;
   private Arms armsSys;
 
-  public DefaultArms(Arms armsSys, XboxController primaryController) {
+  public DefaultArms(Arms armsSys, XboxController secondaryController) {
 
     addRequirements(armsSys);
-    this.primaryController = primaryController;
+    this.secondaryController = secondaryController;
     this.armsSys = armsSys;
 
   }
@@ -30,16 +30,16 @@ public class DefaultArms extends CommandBase {
   @Override
   public void execute() {
 
-    if (primaryController.getXButtonPressed() == true) {
+    if (secondaryController.getXButtonPressed() == true) {
       armsSys.armOutStart();
     }
-    if (primaryController.getXButtonReleased() == true) {
+    if (secondaryController.getXButtonReleased() == true) {
       armsSys.armStop();
     }
-    if (primaryController.getYButtonPressed() == true) {
+    if (secondaryController.getYButtonPressed() == true) {
       armsSys.armInStart();
     }
-    if (primaryController.getYButtonReleased() == true) {
+    if (secondaryController.getYButtonReleased() == true) {
       armsSys.armStop();
     }
 

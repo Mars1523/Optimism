@@ -14,7 +14,7 @@ public class DefaultDrive extends CommandBase {
   private Drivetrain drivetrain;
 
   private final NetworkTableEntry fancyDriveEntry = Shuffleboard.getTab("Drive")
-      .add("Fancy Drive", true)
+      .add("Fancy Drive", false)
       .getEntry();
 
   // Slew rate limiters to make joystick inputs more gentle; 1/3 sec from 0 to 1.
@@ -48,7 +48,7 @@ public class DefaultDrive extends CommandBase {
       // negative values when we push forward.
       double rawX = primaryController.getLeftX();
 
-      final double rot = speedLimiter.calculate(deadband(rawX, .1))
+      final double rot = rotLimiter.calculate(deadband(rawX, .1))
           * Constants.DriveConstants.kMaxSpeed;
 
       // Get the rate of angular rotation. We are inverting this because we want a
@@ -57,14 +57,14 @@ public class DefaultDrive extends CommandBase {
       // the right by default.
 
       double rawY = primaryController.getRightY();
-      final double xSpeed = rotLimiter.calculate(deadband(rawY, .1))
+      final double xSpeed = speedLimiter.calculate(deadband(rawY, .1))
           * Constants.DriveConstants.kMaxAngularSpeed;
 
       drivetrain.fancyDrive(xSpeed, rot);
 
     } else {
-      drivetrain.boringDrive(-primaryController.getRightY(),
-          primaryController.getLeftX());
+      final double ySpeed = speedLimiter.calculate(-primaryController.getRightY());
+      drivetrain.boringDrive(ySpeed, primaryController.getLeftX());
     }
   }
 

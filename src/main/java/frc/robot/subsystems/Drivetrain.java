@@ -25,6 +25,7 @@ public class Drivetrain extends SubsystemBase {
   private final WPI_TalonFX rightFront = new WPI_TalonFX(5);
   // altitude something or other- measuers the position of the robot and the angls
   // and stuff
+
   private final AHRS navx = new AHRS();
 
   private final MotorControllerGroup leftMotors = new MotorControllerGroup(leftFront, leftRear);

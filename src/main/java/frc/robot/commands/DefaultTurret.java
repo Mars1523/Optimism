@@ -3,7 +3,7 @@
 //left and right bumpers togggle turret wheel 
 //on and off respectively/src/main/java/frc/robot/commands/DefaultArms.java': Permission denied
 
-//cant figure out joystick buttonbinding for turret turn??
+//second
 
 package frc.robot.commands;
 
@@ -13,14 +13,14 @@ import frc.robot.subsystems.Turret;
 
 public class DefaultTurret extends CommandBase {
 
-  private XboxController primaryController;
+  private XboxController secondaryController;
   private Turret turretSys;
 
-  public DefaultTurret(XboxController primaryController, Turret turretSys) {
+  public DefaultTurret(XboxController secondaryController, Turret turretSys) {
 
     addRequirements(turretSys);
     this.turretSys = turretSys;
-    this.primaryController = primaryController;
+    this.secondaryController = secondaryController;
 
   }
 
@@ -56,7 +56,7 @@ public class DefaultTurret extends CommandBase {
      * }
      */
 
-    turretSys.setTurretAim(primaryController.getLeftY());
+    turretSys.setTurretAim(secondaryController.getLeftY());
 
   }
 

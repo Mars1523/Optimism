@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Turret extends SubsystemBase {
 
   private final Spark turretTurn = new Spark(1);
-  private final CANSparkMax turretWheel = new CANSparkMax(12, MotorType.kBrushed);
+  private final CANSparkMax turretWheel = new CANSparkMax(12, MotorType.kBrushless);
 
   public Turret() {
 

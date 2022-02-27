@@ -5,42 +5,46 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeTransport;
 
-public class DefaultIntakeTransport extends CommandBase {
+public class DefaultPneumatics extends CommandBase {
 
   private XboxController primaryController;
   private IntakeTransport intakeTransportSys;
 
-  public DefaultIntakeTransport(XboxController primaryController, IntakeTransport intakeTransportSys) {
-
+  public DefaultPneumatics(XboxController primaryController, IntakeTransport intakeTransportSys) {
     addRequirements(intakeTransportSys);
     this.primaryController = primaryController;
     this.intakeTransportSys = intakeTransportSys;
-
   }
 
   @Override
   public void initialize() {
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
-    if (primaryController.getLeftBumperPressed() == true) {
-      intakeTransportSys.transportToggleOn();
+    if (primaryController.getXButtonPressed() == true) {
+      intakeTransportSys.wristUpFront();
     }
-    if (primaryController.getLeftBumperReleased() == true) {
-      intakeTransportSys.transportToggleOff();
+
+    if (primaryController.getXButtonReleased() == true) {
+      intakeTransportSys.wristDownFront();
+    }
+
+    if (primaryController.getYButtonPressed() == true) {
+      intakeTransportSys.wristUpBack();
+    }
+
+    if (primaryController.getYButtonReleased() == true) {
+      intakeTransportSys.wristDownBack();
     }
 
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

@@ -2,6 +2,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.PneumaticsControlModule;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DefaultArms;
 import frc.robot.commands.DefaultDrive;
@@ -14,19 +15,23 @@ import frc.robot.subsystems.Turret;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class RobotContainer {
+
+  private final PneumaticsControlModule pCM = new PneumaticsControlModule(0);
+
   // The robot's subsystems
   private final Arms arms = new Arms();
   private final Drivetrain drivetrain = new Drivetrain();
-  private final IntakeTransport intrans = new IntakeTransport();
+  private final IntakeTransport intrans = new IntakeTransport(pCM);
   private final Turret turret = new Turret();
 
   // controllers
   private final XboxController primaryController = new XboxController(0);
+  private final XboxController secondaryController = new XboxController(1);
 
   // robo commands
   private final DefaultDrive defaultDrive = new DefaultDrive(drivetrain, primaryController);
-  private final DefaultArms defaultArms = new DefaultArms(arms, primaryController);
-  private final DefaultTurret defaultTurret = new DefaultTurret(primaryController, turret);
+  private final DefaultArms defaultArms = new DefaultArms(arms, secondaryController);
+  private final DefaultTurret defaultTurret = new DefaultTurret(secondaryController, turret);
   private final DefaultIntakeTransport defaultIntakeTransport = new DefaultIntakeTransport(primaryController, intrans);
 
   /**
