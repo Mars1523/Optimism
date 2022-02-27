@@ -1,12 +1,9 @@
 
-//PWMTalonSRX --> CANTalonSRX
-
-//intake use joystick or toggle AGAIN ugh-
-//yeah
-
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsControlModule;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.PWMTalonSRX;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
@@ -26,8 +23,16 @@ public class IntakeTransport extends SubsystemBase {
 
   private PneumaticsControlModule pCM;
 
+  private final DoubleSolenoid frontSolenoid;
+  private final DoubleSolenoid backSolenoid;
+  private final DoubleSolenoid topSolenoid;
+
   public IntakeTransport(PneumaticsControlModule pCM) {
     this.pCM = pCM;
+    backSolenoid = pCM.makeDoubleSolenoid(1, 0); // down/foward, up/reverse
+    frontSolenoid = pCM.makeDoubleSolenoid(2, 3);
+    topSolenoid = pCM.makeDoubleSolenoid(5, 4);
+
   }
 
   public void transportToggleOn() {
@@ -41,19 +46,19 @@ public class IntakeTransport extends SubsystemBase {
   }
 
   public void wristUpFront() {
-
+    frontSolenoid.set(Value.kForward);
   }
 
   public void wristDownFront() {
-
+    frontSolenoid.set(Value.kReverse);
   }
 
   public void wristUpBack() {
-
+    frontSolenoid.set(Value.kForward);
   }
 
   public void wristDownBack() {
-
+    frontSolenoid.set(Value.kReverse);
   }
 
   @Override

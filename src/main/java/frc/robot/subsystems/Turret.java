@@ -1,6 +1,3 @@
-//turret wheel + turn 
-//PWMTalonSRX --> CANTalonSRX
-//cant figure out joystick buttonbinding for turret turn??
 
 package frc.robot.subsystems;
 
@@ -45,17 +42,8 @@ public class Turret extends SubsystemBase {
     turretTurn.set(speed);
   }
 
-  /*
-   * public void DifferentialDrive(double x, double y){
-   * turretTurn.arcadeDrive(x,y);
-   * 
-   * // analoginput from sparkmax documentation
-   * //get pov?
-   * }
-   */
-
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+
   }
 }
