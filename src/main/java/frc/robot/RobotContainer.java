@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DefaultArms;
 import frc.robot.commands.DefaultDrive;
+import frc.robot.commands.DefaultIntakeTransport;
 import frc.robot.commands.DefaultTurret;
 import frc.robot.subsystems.Arms;
 import frc.robot.subsystems.Drivetrain;
@@ -22,15 +23,21 @@ public class RobotContainer {
   // controllers
   private final XboxController primaryController = new XboxController(0);
 
-  // robo commands *blush emoji*
-  private final DefaultDrive defaultdrive = new DefaultDrive(drivetrain, primaryController);
+  // robo commands
+  private final DefaultDrive defaultDrive = new DefaultDrive(drivetrain, primaryController);
   private final DefaultArms defaultArms = new DefaultArms(arms, primaryController);
   private final DefaultTurret defaultTurret = new DefaultTurret(primaryController, turret);
+  private final DefaultIntakeTransport defaultIntakeTransport = new DefaultIntakeTransport(primaryController, intrans);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    drivetrain.setDefaultCommand(defaultDrive);
+    arms.setDefaultCommand(defaultArms);
+    intrans.setDefaultCommand(defaultIntakeTransport);
+    turret.setDefaultCommand(defaultTurret);
+
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -53,6 +60,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return defaultdrive;
+    return defaultDrive;
   }
 }

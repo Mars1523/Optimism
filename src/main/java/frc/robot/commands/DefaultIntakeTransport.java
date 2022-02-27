@@ -10,7 +10,7 @@ public class DefaultIntakeTransport extends CommandBase {
   private XboxController primaryController;
   private IntakeTransport intakeTransportSys;
 
-  public DefaultIntakeTransport() {
+  public DefaultIntakeTransport(XboxController primaryController, IntakeTransport intakeTransportSys) {
 
     addRequirements(intakeTransportSys);
     this.primaryController = primaryController;

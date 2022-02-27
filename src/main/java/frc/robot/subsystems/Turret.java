@@ -8,12 +8,13 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.motorcontrol.PWMTalonSRX;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Turret extends SubsystemBase {
 
-  private final PWMTalonSRX turretTurn = new PWMTalonSRX(0);
-  private final CANSparkMax turretWheel = new CANSparkMax(0, MotorType.kBrushed);
+  private final Spark turretTurn = new Spark(1);
+  private final CANSparkMax turretWheel = new CANSparkMax(12, MotorType.kBrushed);
 
   public Turret() {
 

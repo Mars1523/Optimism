@@ -2,7 +2,6 @@
 //b button makes turret go right (toggle)
 //left and right bumpers togggle turret wheel 
 //on and off respectively/src/main/java/frc/robot/commands/DefaultArms.java': Permission denied
-mv:cannot remove'/mnt/2022 bot/src/main/java/frc/robot/commands/DefaultDrive.java':Permission denied mv:cannot remove'/mnt/2022 bot/src/main/java/frc/robot/commands/DefaultIntakeTransport.java':Permission denied mv:cannot remove'/mnt/2022 bot/src/main/java/frc/robot/commands/DefaultTurret.java':Permission denied mv:cannot remove'/mnt/2022 bot/src/main/java/frc/robot/Constants.java':Permission denied[birdboy @coolmathgames robot-2022]
 
 //cant figure out joystick buttonbinding for turret turn??
 
@@ -17,10 +16,10 @@ public class DefaultTurret extends CommandBase {
   private XboxController primaryController;
   private Turret turretSys;
 
-  public DefaultTurret(XboxController primaryController, Turret turretSub) {
+  public DefaultTurret(XboxController primaryController, Turret turretSys) {
 
     addRequirements(turretSys);
-    // this.turretSys = turretSys;
+    this.turretSys = turretSys;
     this.primaryController = primaryController;
 
   }
