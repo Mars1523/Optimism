@@ -61,6 +61,14 @@ public class IntakeTransport extends SubsystemBase {
     frontSolenoid.set(Value.kReverse);
   }
 
+  public void topSolenoidDown() {
+    topSolenoid.set(Value.kForward);
+  }
+
+  public void topSolenoidUp() {
+    topSolenoid.set(Value.kReverse);
+  }
+
   @Override
   public void periodic() {
 
