@@ -27,19 +27,19 @@ public class DefaultPneumatics extends CommandBase {
   public void execute() {
 
     if (primaryController.getRightBumperPressed() == true) {
-      intakeTransportSys.wristUpFront();
-    }
-
-    if (primaryController.getRightBumperReleased() == true) {
       intakeTransportSys.wristDownFront();
     }
 
+    if (primaryController.getRightBumperReleased() == true) {
+      intakeTransportSys.wristUpFront();
+    }
+
     if (primaryController.getLeftBumperPressed() == true) {
-      intakeTransportSys.wristUpBack();
+      intakeTransportSys.wristDownBack();
     }
 
     if (primaryController.getLeftBumperReleased() == true) {
-      intakeTransportSys.wristDownBack();
+      intakeTransportSys.wristUpBack();
     }
 
     if (secondaryController.getPOV() == 0) {

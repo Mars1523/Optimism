@@ -39,30 +39,49 @@ public class IntakeTransport extends SubsystemBase {
 
   }
 
-  public void transportToggleOn() {
-    intakeTransport.set(1);
-    inTake.set(1);
+  // BELOW ARE HOUSED IN DEFAULT INTAKE TRANSPORT
+
+  public void shooterOn() {
+    vertTransport.set(1);
   }
 
-  public void transportToggleOff() {
-    intakeTransport.set(0);
-    inTake.set(0);
+  public void shooterOff() {
+    vertTransport.set(0);
+  }
+
+  /*
+   * public void intakeToggleOn() {
+   * inTake.set(1);
+   * }
+   * 
+   * public void intakeToggleOff() {
+   * inTake.set(0);
+   * }
+   */
+
+  // BELOW ARE HOUSED IN DEFAULT PNEUMATICS
+  public void wristDownFront() {
+    frontSolenoid.set(Value.kForward);
+    intakeFront.set(1);
+    horizTransport.set(1);
   }
 
   public void wristUpFront() {
-    frontSolenoid.set(Value.kForward);
-  }
-
-  public void wristDownFront() {
     frontSolenoid.set(Value.kReverse);
-  }
-
-  public void wristUpBack() {
-    frontSolenoid.set(Value.kForward);
+    intakeFront.set(0);
+    horizTransport.set(0);
   }
 
   public void wristDownBack() {
+    frontSolenoid.set(Value.kForward);
+    intakeBack.set(1);
+    horizTransport.set(-1);
+  }
+
+  public void wristUpBack() {
     frontSolenoid.set(Value.kReverse);
+    intakeBack.set(0);
+    horizTransport.set(0);
   }
 
   public void topSolenoidDown() {

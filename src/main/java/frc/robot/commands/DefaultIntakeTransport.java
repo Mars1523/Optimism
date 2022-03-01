@@ -22,15 +22,14 @@ public class DefaultIntakeTransport extends CommandBase {
   public void initialize() {
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
-    if (primaryController.getRightTriggerAxis() == 1) {
-      intakeTransportSys.transportToggleOn();
+    if (primaryController.getLeftTriggerAxis() == 0.5) {
+      intakeTransportSys.shooterOn();
     }
-    if (primaryController.getRightTriggerAxis() == 0) {
-      intakeTransportSys.transportToggleOff();
+    if (primaryController.getLeftTriggerAxis() == 0) {
+      intakeTransportSys.shooterOff();
     }
 
   }
