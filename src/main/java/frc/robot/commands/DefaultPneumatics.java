@@ -9,11 +9,14 @@ public class DefaultPneumatics extends CommandBase {
 
   private XboxController primaryController;
   private IntakeTransport intakeTransportSys;
+  private XboxController secondaryController;
 
-  public DefaultPneumatics(XboxController primaryController, IntakeTransport intakeTransportSys) {
+  public DefaultPneumatics(XboxController primaryController, IntakeTransport intakeTransportSys,
+      XboxController secondaryController) {
     addRequirements(intakeTransportSys);
     this.primaryController = primaryController;
     this.intakeTransportSys = intakeTransportSys;
+    this.secondaryController = secondaryController;
   }
 
   @Override
@@ -23,27 +26,27 @@ public class DefaultPneumatics extends CommandBase {
   @Override
   public void execute() {
 
-    if (primaryController.getXButtonPressed() == true) {
+    if (primaryController.getRightBumperPressed() == true) {
       intakeTransportSys.wristUpFront();
     }
 
-    if (primaryController.getXButtonReleased() == true) {
+    if (primaryController.getRightBumperReleased() == true) {
       intakeTransportSys.wristDownFront();
     }
 
-    if (primaryController.getYButtonPressed() == true) {
+    if (primaryController.getLeftBumperPressed() == true) {
       intakeTransportSys.wristUpBack();
     }
 
-    if (primaryController.getYButtonReleased() == true) {
+    if (primaryController.getLeftBumperReleased() == true) {
       intakeTransportSys.wristDownBack();
     }
 
-    if (primaryController.getPOV() == 0) {
+    if (secondaryController.getPOV() == 0) {
       intakeTransportSys.topSolenoidUp();
     }
 
-    if (primaryController.getPOV() == 180) {
+    if (secondaryController.getPOV() == 180) {
       intakeTransportSys.topSolenoidDown();
     }
 

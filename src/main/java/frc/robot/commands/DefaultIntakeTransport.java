@@ -26,10 +26,10 @@ public class DefaultIntakeTransport extends CommandBase {
   @Override
   public void execute() {
 
-    if (primaryController.getLeftBumperPressed() == true) {
+    if (primaryController.getRightTriggerAxis() == 1) {
       intakeTransportSys.transportToggleOn();
     }
-    if (primaryController.getLeftBumperReleased() == true) {
+    if (primaryController.getRightTriggerAxis() == 0) {
       intakeTransportSys.transportToggleOff();
     }
 

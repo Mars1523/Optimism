@@ -30,16 +30,16 @@ public class DefaultArms extends CommandBase {
   @Override
   public void execute() {
 
-    if (secondaryController.getXButtonPressed() == true) {
+    if (secondaryController.getRightTriggerAxis() == 1) {
       armsSys.armOutStart();
     }
-    if (secondaryController.getXButtonReleased() == true) {
+    if (secondaryController.getRightTriggerAxis() == 0) {
       armsSys.armStop();
     }
-    if (secondaryController.getYButtonPressed() == true) {
+    if (secondaryController.getLeftTriggerAxis() == 1) {
       armsSys.armInStart();
     }
-    if (secondaryController.getYButtonReleased() == true) {
+    if (secondaryController.getLeftTriggerAxis() == 0) {
       armsSys.armStop();
     }
 

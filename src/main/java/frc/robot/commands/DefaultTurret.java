@@ -1,7 +1,3 @@
-//a button makes turret go left (toggle)
-//b button makes turret go right (toggle)
-//left and right bumpers togggle turret wheel 
-//on and off respectively/src/main/java/frc/robot/commands/DefaultArms.java': Permission denied
 
 //second
 
@@ -56,7 +52,7 @@ public class DefaultTurret extends CommandBase {
      * }
      */
 
-    turretSys.setTurretAim(secondaryController.getLeftY());
+    turretSys.setTurretAim(secondaryController.getLeftX());
 
   }
 
