@@ -33,6 +33,10 @@ public class IntakeTransport extends SubsystemBase {
     frontSolenoid = pCM.makeDoubleSolenoid(2, 3);
     topSolenoid = pCM.makeDoubleSolenoid(5, 4);
 
+    backSolenoid.set(Value.kReverse);
+    frontSolenoid.set(Value.kReverse);
+    topSolenoid.set(Value.kReverse);
+
   }
 
   public void transportToggleOn() {
