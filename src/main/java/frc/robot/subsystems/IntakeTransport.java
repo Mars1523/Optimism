@@ -62,7 +62,7 @@ public class IntakeTransport extends SubsystemBase {
   // BELOW ARE HOUSED IN DEFAULT PNEUMATICS
   public void wristDownFront() {
     frontSolenoid.set(Value.kForward);
-    intakeFront.set(1);
+    intakeFront.set(0.5);
     horizTransport.set(1);
   }
 
@@ -74,7 +74,7 @@ public class IntakeTransport extends SubsystemBase {
 
   public void wristDownBack() {
     frontSolenoid.set(Value.kForward);
-    intakeBack.set(1);
+    intakeBack.set(0.5);
     horizTransport.set(-1);
   }
 
