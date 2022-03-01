@@ -42,11 +42,11 @@ public class DefaultPneumatics extends CommandBase {
       intakeTransportSys.wristUpBack();
     }
 
-    if (secondaryController.getPOV() == 0) {
+    if (secondaryController.getYButtonPressed() == true) {
       intakeTransportSys.topSolenoidUp();
     }
 
-    if (secondaryController.getPOV() == 180) {
+    if (secondaryController.getBButtonPressed() == true) {
       intakeTransportSys.topSolenoidDown();
     }
 
