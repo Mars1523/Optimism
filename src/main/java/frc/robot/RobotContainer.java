@@ -8,9 +8,11 @@ import frc.robot.commands.DefaultArms;
 import frc.robot.commands.DefaultDrive;
 import frc.robot.commands.DefaultIntakeTransport;
 import frc.robot.commands.DefaultTurret;
+import frc.robot.commands.LimelightTurnToTarget;
 import frc.robot.subsystems.Arms;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.IntakeTransport;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Turret;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -23,6 +25,7 @@ public class RobotContainer {
   private final Drivetrain drivetrain = new Drivetrain();
   private final IntakeTransport intrans = new IntakeTransport(pCM);
   private final Turret turret = new Turret();
+  private final Limelight limelight = new Limelight();
 
   // controllers
   private final XboxController primaryController = new XboxController(0);
@@ -33,6 +36,7 @@ public class RobotContainer {
   private final DefaultArms defaultArms = new DefaultArms(arms, secondaryController);
   private final DefaultTurret defaultTurret = new DefaultTurret(secondaryController, turret);
   private final DefaultIntakeTransport defaultIntakeTransport = new DefaultIntakeTransport(primaryController, intrans);
+  private final LimelightTurnToTarget limelightTurnToTarget = new LimelightTurnToTarget(primaryController, limelight);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -42,6 +46,7 @@ public class RobotContainer {
     arms.setDefaultCommand(defaultArms);
     intrans.setDefaultCommand(defaultIntakeTransport);
     turret.setDefaultCommand(defaultTurret);
+    limelight.setDefaultCommand(limelightTurnToTarget);
 
     // Configure the button bindings
     configureButtonBindings();
