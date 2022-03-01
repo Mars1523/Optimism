@@ -26,22 +26,6 @@ public class DefaultPneumatics extends CommandBase {
   @Override
   public void execute() {
 
-    if (primaryController.getRightBumperPressed() == true) {
-      intakeTransportSys.wristDownFront();
-    }
-
-    if (primaryController.getRightBumperReleased() == true) {
-      intakeTransportSys.wristUpFront();
-    }
-
-    if (primaryController.getLeftBumperPressed() == true) {
-      intakeTransportSys.wristDownBack();
-    }
-
-    if (primaryController.getLeftBumperReleased() == true) {
-      intakeTransportSys.wristUpBack();
-    }
-
     if (secondaryController.getYButtonPressed() == true) {
       intakeTransportSys.topSolenoidUp();
     }

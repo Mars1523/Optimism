@@ -34,7 +34,7 @@ public class RobotContainer {
   // robo commands
   private final DefaultDrive defaultDrive = new DefaultDrive(drivetrain, primaryController);
   private final DefaultArms defaultArms = new DefaultArms(arms, secondaryController);
-  private final DefaultTurret defaultTurret = new DefaultTurret(secondaryController, turret);
+  private final DefaultTurret defaultTurret = new DefaultTurret(secondaryController, turret, primaryController);
   private final DefaultIntakeTransport defaultIntakeTransport = new DefaultIntakeTransport(primaryController, intrans);
   private final DefaultLimelight defaultLimelight = new DefaultLimelight(primaryController, limelight);
 

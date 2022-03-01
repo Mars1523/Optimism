@@ -12,31 +12,19 @@ public class Turret extends SubsystemBase {
 
   private final Spark turretTurn = new Spark(1);
   private final CANSparkMax turretWheel = new CANSparkMax(12, MotorType.kBrushless);
+  private final Spark vertTransport = new Spark(2);
 
   public Turret() {
 
   }
-  /*
-   * public void wheelToggleOn() {
-   * turretWheel.set(1);
-   * }
-   * 
-   * public void wheelToggleOff() {
-   * turretWheel.set(0);
-   * }
-   * 
-   * public void aimLeft() {
-   * turretTurn.set(0.5);
-   * }
-   * 
-   * public void turretStop() {
-   * turretWheel.set(0);
-   * }
-   * 
-   * public void aimRight() {
-   * turretWheel.set(-0.5);
-   * }
-   */
+
+  public void shooterOn() {
+    vertTransport.set(1);
+  }
+
+  public void shooterOff() {
+    vertTransport.set(0);
+  }
 
   public void setTurretAim(double speed) {
     turretTurn.set(speed);

@@ -11,12 +11,14 @@ public class DefaultTurret extends CommandBase {
 
   private XboxController secondaryController;
   private Turret turretSys;
+  private XboxController primaryController;
 
-  public DefaultTurret(XboxController secondaryController, Turret turretSys) {
+  public DefaultTurret(XboxController secondaryController, Turret turretSys, XboxController primaryController) {
 
     addRequirements(turretSys);
     this.turretSys = turretSys;
     this.secondaryController = secondaryController;
+    this.primaryController = primaryController;
 
   }
 
@@ -26,31 +28,13 @@ public class DefaultTurret extends CommandBase {
 
   @Override
   public void execute() {
-    /*
-     * if (primaryController.getLeftBumperPressed() == true) {
-     * turretSys.wheelToggleOn();
-     * }
-     * 
-     * if (primaryController.getRightBumperPressed() == true) {
-     * turretSys.wheelToggleOff();
-     * }
-     * 
-     * if (primaryController.getAButtonPressed() == true) {
-     * turretSys.aimLeft();
-     * }
-     * 
-     * if (primaryController.getAButtonReleased() == true) {
-     * turretSys.turretStop();
-     * }
-     * 
-     * if (primaryController.getBButtonPressed() == true) {
-     * turretSys.aimRight();
-     * }
-     * 
-     * if (primaryController.getBButtonReleased() == true) {
-     * turretSys.turretStop();
-     * }
-     */
+
+    if (primaryController.getLeftTriggerAxis() == 0.5) {
+      turretSys.shooterOn();
+    }
+    if (primaryController.getLeftTriggerAxis() == 0) {
+      turretSys.shooterOff();
+    }
 
     turretSys.setTurretAim(secondaryController.getLeftX());
 

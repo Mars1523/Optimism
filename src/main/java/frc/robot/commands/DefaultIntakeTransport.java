@@ -25,11 +25,22 @@ public class DefaultIntakeTransport extends CommandBase {
   @Override
   public void execute() {
 
-    if (primaryController.getLeftTriggerAxis() == 0.5) {
-      intakeTransportSys.shooterOn();
+    /*
+     * if (primaryController.getRightBumperPressed() == true) {
+     * intakeTransportSys.wristDownFront();
+     * }
+     * 
+     * if (primaryController.getRightBumperReleased() == true) {
+     * intakeTransportSys.wristUpFront();
+     * }
+     */
+
+    if (primaryController.getLeftBumperPressed() == true) {
+      intakeTransportSys.wristDownBack();
     }
-    if (primaryController.getLeftTriggerAxis() == 0) {
-      intakeTransportSys.shooterOff();
+
+    if (primaryController.getLeftBumperReleased() == true) {
+      intakeTransportSys.wristUpBack();
     }
 
   }
