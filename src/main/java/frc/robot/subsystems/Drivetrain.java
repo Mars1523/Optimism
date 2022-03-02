@@ -76,6 +76,10 @@ public class Drivetrain extends SubsystemBase {
     return navx.getAngle();
   }
 
+  public void driveRaw(double leftY, double rightX) {
+    robotDrive.arcadeDrive(-leftY, -rightX, false);
+  }
+
   public void zeroSensors() {
     driveOdometry.resetPosition(new Pose2d(0.0, 0.0, new Rotation2d()),
         Rotation2d.fromDegrees(navx.getYaw()));
