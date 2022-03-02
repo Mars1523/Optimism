@@ -19,13 +19,17 @@ public class Turret extends SubsystemBase {
   }
 
   public void shooterOn() {
-    vertTransport.set(1);
+    vertTransport.set(-0.5);
     turretWheel.set(-0.5);
   }
 
   public void shooterOff() {
     vertTransport.set(0);
     turretWheel.set(0);
+  }
+
+  public void shooterBack() {
+    vertTransport.set(0.5);
   }
 
   public void setTurretAim(double speed) {

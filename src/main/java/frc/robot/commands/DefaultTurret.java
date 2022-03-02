@@ -36,7 +36,15 @@ public class DefaultTurret extends CommandBase {
       turretSys.shooterOff();
     }
 
-    turretSys.setTurretAim(secondaryController.getLeftX());
+    if (primaryController.getAButtonPressed() == true){
+      turretSys.shooterBack();
+    }
+
+    if(primaryController.getAButtonReleased() == true){
+      turretSys.shooterOff();
+    }
+
+      turretSys.setTurretAim(secondaryController.getLeftX());
 
   }
 
