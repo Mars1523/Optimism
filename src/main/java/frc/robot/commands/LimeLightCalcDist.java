@@ -15,9 +15,10 @@ public class LimeLightCalcDist extends CommandBase {
   double limelightMountAngleDegrees = 20.0;
   double limelightLensHeightInches = 15.3543;
   double goalHeightInches = 104;
-  double targetOffsetAngle_Vertical = limeLight.getY();
-  double angleToGoalDegrees = limelightMountAngleDegrees + targetOffsetAngle_Vertical;
-  double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
+  // double targetOffsetAngle_Vertical = limeLight.getY();
+  // double angleToGoalDegrees = limelightMountAngleDegrees +
+  // targetOffsetAngle_Vertical;
+  // double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
   double distanceFromLimelightToGoalInches;
   private XboxController primaryController;
 
@@ -47,8 +48,9 @@ public class LimeLightCalcDist extends CommandBase {
   }
 
   public double getDist() {
-    distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches)
-        / Math.tan(angleToGoalRadians);
+    // distanceFromLimelightToGoalInches = (goalHeightInches -
+    // limelightLensHeightInches)
+    // / Math.tan(angleToGoalRadians);
     return getDist();
   }
 
