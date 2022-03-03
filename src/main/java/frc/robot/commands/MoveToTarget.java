@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.Limelight;
 
 public class MoveToTarget extends CommandBase {
@@ -20,6 +21,7 @@ public class MoveToTarget extends CommandBase {
   private final PIDController turnPID;
   Limelight limeLight;
   Drivetrain driveTrain;
+  private XboxController primaryController;
   LimeLightCalcDist limeLightCalcDist;
   SlewRateLimiter filter = new SlewRateLimiter(0.5);
   SlewRateLimiter filterTurn = new SlewRateLimiter(1);
@@ -35,6 +37,7 @@ public class MoveToTarget extends CommandBase {
     addRequirements(limelight);
     this.driveTrain = drivetrain;
     this.limeLight = limelight;
+    this.primaryController = primaryController;
 
   }
 
@@ -48,19 +51,22 @@ public class MoveToTarget extends CommandBase {
   @Override
   public void execute() {
 
-    if (m_debouncer.calculate(limeLight.getTV())) {
-      double output = movePID.calculate(limeLightCalcDist.getDist());
-      double turnOutput = turnPID.calculate(limeLight.getX());
-      filter.calculate(output);
-      filterTurn.calculate(output);
-      // drivetrain.driveRaw(, 0);
+    if (primaryController.getYButton() == true) {
 
-      System.out.println("turn" + turnOutput + " go " + output);
-      driveTrain.driveRaw(MathUtil.clamp(output, -.2, .2), MathUtil.clamp(-turnOutput, -.2, .2));
-    } else {
-      driveTrain.driveRaw(0, 0);
+      if (m_debouncer.calculate(limeLight.getTV())) {
+        double output = movePID.calculate(limeLight.getArea());
+        double turnOutput = turnPID.calculate(limeLight.getX());
+        filter.calculate(output);
+        filterTurn.calculate(output);
+        // drivetrain.driveRaw(, 0);
+
+        // System.out.println("turn" + turnOutput + " go " + output);
+        driveTrain.driveRaw(MathUtil.clamp(output, -.2, .2), MathUtil.clamp(-turnOutput, -.2, .2));
+      } else {
+        driveTrain.driveRaw(0, 0);
+      }
+
     }
-
   }
 
   // Called once the command ends or is interrupted.

@@ -15,11 +15,7 @@ public class LimeLightCalcDist extends CommandBase {
   double limelightMountAngleDegrees = 20.0;
   double limelightLensHeightInches = 15.3543;
   double goalHeightInches = 104;
-  // double targetOffsetAngle_Vertical = limeLight.getY();
-  // double angleToGoalDegrees = limelightMountAngleDegrees +
-  // targetOffsetAngle_Vertical;
-  // double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
-  double distanceFromLimelightToGoalInches;
+
   private XboxController primaryController;
 
   public LimeLightCalcDist(XboxController primaryController, Limelight limeLight) {
@@ -37,8 +33,9 @@ public class LimeLightCalcDist extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
     if (primaryController.getRightTriggerAxis() > 0.2) {
-      moveToTarget.execute();
+      // moveToTarget.execute();
     }
   }
 
