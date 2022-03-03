@@ -21,7 +21,7 @@ public class Arms extends SubsystemBase {
   }
 
   public void armOutStart() {
-    armS.set(0.1);
+    armS.set(0.5);
   }
 
   public void armStop() {
@@ -29,11 +29,12 @@ public class Arms extends SubsystemBase {
   }
 
   public void armInStart() {
-    armS.set(-0.1);
+    armS.set(-0.5);
   }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    leftArm.setInverted(true);
   }
+
 }

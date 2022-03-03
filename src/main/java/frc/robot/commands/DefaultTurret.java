@@ -29,10 +29,18 @@ public class DefaultTurret extends CommandBase {
   @Override
   public void execute() {
 
-    if (primaryController.getLeftTriggerAxis() == 0.5) {
+    if (primaryController.getXButtonPressed() == true) {
       turretSys.shooterOn();
     }
-    if (primaryController.getLeftTriggerAxis() == 0) {
+    if (primaryController.getXButtonReleased() == true) {
+      turretSys.shooterOff();
+    }
+
+    if (primaryController.getAButtonPressed() == true) {
+      turretSys.shooterBack();
+    }
+
+    if (primaryController.getAButtonReleased() == true) {
       turretSys.shooterOff();
     }
 

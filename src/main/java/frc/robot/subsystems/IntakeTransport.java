@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class IntakeTransport extends SubsystemBase {
 
   // private final Spark intakeFront = new Spark(0);
-  private final Spark intakeBack = new Spark(5);
+  private final Spark intakeBack = new Spark(0);
 
   // private final MotorControllerGroup inTake = new
   // MotorControllerGroup(intakeFront, intakeBack);
@@ -33,7 +33,7 @@ public class IntakeTransport extends SubsystemBase {
 
     backSolenoid.set(Value.kReverse);
     frontSolenoid.set(Value.kReverse);
-    topSolenoid.set(Value.kReverse);
+    topSolenoid.set(Value.kForward);
 
   }
 
@@ -55,8 +55,8 @@ public class IntakeTransport extends SubsystemBase {
 
   public void wristDownBack() {
     frontSolenoid.set(Value.kForward);
-    intakeBack.set(0.5);
-    horizTransport.set(-1);
+    intakeBack.set(0.8);
+    horizTransport.set(0.5);
   }
 
   public void wristUpBack() {
