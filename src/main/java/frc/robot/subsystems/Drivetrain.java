@@ -24,11 +24,8 @@ public class Drivetrain extends SubsystemBase {
   private final WPI_TalonFX rightFront = new WPI_TalonFX(5);
   // altitude something or other- measuers the position of the robot and the angls
   // and stuff
-  public static final double kGearRatio = 10.71;
-  // Meters (6 inch/2)
-  public static final double kWheelRadius = 0.1524 / 2;
-  public static final double kEncoderResolution = 2048;
-  public static final double kDistancePerTick = (2 * Math.PI * kWheelRadius / kEncoderResolution) / kGearRatio;
+
+  private final AHRS navx = new AHRS();
 
   private final MotorControllerGroup leftMotors = new MotorControllerGroup(leftFront, leftRear);
   private final MotorControllerGroup rightMotors = new MotorControllerGroup(rightFront, rightRear);
@@ -38,9 +35,8 @@ public class Drivetrain extends SubsystemBase {
   private final PIDController rightPIDController = new PIDController(1, 0, 0);
 
   // measures the distance ur robotb traveled
-  // private final DifferentialDriveOdometry driveOdometry = new
-  // DifferentialDriveOdometry(
-  // Rotation2d.fromDegrees(navx.getAngle()));
+  private final DifferentialDriveOdometry driveOdometry = new DifferentialDriveOdometry(
+      Rotation2d.fromDegrees(navx.getAngle()));
 
   private final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(
       Constants.DriveConstants.kTrackWidth);
@@ -76,38 +72,22 @@ public class Drivetrain extends SubsystemBase {
    * }
    */
 
-  // public double getAngle() {
-  // return navx.getAngle();
-  // }
+  public double getAngle() {
+    return navx.getAngle();
+  }
 
   public void driveRaw(double leftY, double rightX) {
     robotDrive.arcadeDrive(-leftY, -rightX, false);
   }
 
   public void zeroSensors() {
-    // driveOdometry.resetPosition(new Pose2d(0.0, 0.0, new Rotation2d()),
-    // Rotation2d.fromDegrees(navx.getYaw()));
-    // navx.zeroYaw();
+    driveOdometry.resetPosition(new Pose2d(0.0, 0.0, new Rotation2d()),
+        Rotation2d.fromDegrees(navx.getYaw()));
+    navx.zeroYaw();
     leftFront.setSelectedSensorPosition(0);
     rightFront.setSelectedSensorPosition(0);
     leftRear.setSelectedSensorPosition(0);
     rightRear.setSelectedSensorPosition(0);
-  }
-
-  public void reset() {
-    leftFront.setSelectedSensorPosition(0);
-    rightFront.setSelectedSensorPosition(0);
-
-  }
-
-  public double getDistance() {
-    double leftMotor = leftFront.getSelectedSensorPosition() * kDistancePerTick;
-    double rightMotor = -rightFront.getSelectedSensorPosition() * kDistancePerTick;
-
-    double averageMove = (leftMotor + rightMotor) / 2;
-
-    return averageMove;
-
   }
 
   public void boringDrive(double xSpeed, double rotation) {
@@ -149,13 +129,9 @@ public class Drivetrain extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // driveOdometry.update(Rotation2d.fromDegrees(navx.getYaw()),
-    // getLeftDistance(),
-    // getRightDistance());
-  }
-
-  public double getEncoder() {
-    return leftFront.getSelectedSensorPosition();
+    driveOdometry.update(Rotation2d.fromDegrees(navx.getYaw()),
+        getLeftDistance(),
+        getRightDistance());
   }
 
 }

@@ -8,13 +8,12 @@ import frc.robot.commands.DefaultArms;
 import frc.robot.commands.DefaultDrive;
 import frc.robot.commands.DefaultIntakeTransport;
 import frc.robot.commands.DefaultTurret;
-import frc.robot.commands.DriveForward;
-import frc.robot.commands.LimeLightToggle;
+import frc.robot.commands.LimeLightCalcDist;
 import frc.robot.commands.MoveToTarget;
+import frc.robot.commands.DefaultLimelight;
 import frc.robot.subsystems.Arms;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.IntakeTransport;
-import frc.robot.subsystems.LimeLightSend;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Turret;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -39,14 +38,9 @@ public class RobotContainer {
   private final DefaultArms defaultArms = new DefaultArms(arms, secondaryController);
   private final DefaultTurret defaultTurret = new DefaultTurret(secondaryController, turret, primaryController);
   private final DefaultIntakeTransport defaultIntakeTransport = new DefaultIntakeTransport(primaryController, intrans);
-  // private final DefaultLimelight defaultLimelight = new
-  // DefaultLimelight(primaryController, limelight);\
-  private final DriveForward driveForward = new DriveForward(drivetrain, 0.2);
-  private final LimeLightToggle limeLightToggle = new LimeLightToggle();
-  private final LimeLightSend limeLightSend = new LimeLightSend();
-
-  // DriveForward driveForward;
-  private final MoveToTarget moveToTarget = new MoveToTarget(drivetrain, limelight);
+  private final DefaultLimelight defaultLimelight = new DefaultLimelight(primaryController, limelight);
+  private final MoveToTarget moveToTarget = new MoveToTarget(drivetrain, limelight, primaryController);
+  private final LimeLightCalcDist limeLightCalcDist = new LimeLightCalcDist(primaryController, limelight);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -56,20 +50,11 @@ public class RobotContainer {
     arms.setDefaultCommand(defaultArms);
     intrans.setDefaultCommand(defaultIntakeTransport);
     turret.setDefaultCommand(defaultTurret);
-    limelight.setDefaultCommand(moveToTarget);
-    limeLightToggle.setDefaultCommand(limeLightSend);
+    limelight.setDefaultCommand(limeLightCalcDist);
 
     // Configure the button bindings
     configureButtonBindings();
   }
-
-  // public void limeLightTargeting() {
-  // if (primaryController.getYButtonPressed()) {
-  // moveToTarget.schedule();
-  // } else if (primaryController.getYButtonReleased()) {
-  // moveToTarget.cancel();
-  // }
-  // }
 
   /**
    * Use this method to define your button->command mappings. Buttons can be
@@ -89,6 +74,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return driveForward;
+    return defaultDrive;
   }
 }

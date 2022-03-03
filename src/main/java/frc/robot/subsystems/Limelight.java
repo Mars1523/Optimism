@@ -38,7 +38,6 @@ public class Limelight extends SubsystemBase {
 
   public double getY() {
     double y = ty.getDouble(0.0);
-
     return y;
   }
 

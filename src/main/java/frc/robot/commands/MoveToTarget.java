@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.Limelight;
 
 public class MoveToTarget extends CommandBase {
@@ -21,15 +20,13 @@ public class MoveToTarget extends CommandBase {
   private final PIDController turnPID;
   Limelight limeLight;
   Drivetrain driveTrain;
-
+  LimeLightCalcDist limeLightCalcDist;
   SlewRateLimiter filter = new SlewRateLimiter(0.5);
   SlewRateLimiter filterTurn = new SlewRateLimiter(1);
   Debouncer m_debouncer = new Debouncer(0.3, Debouncer.DebounceType.kBoth);
-  boolean isFinishedButton = false;
 
-  public MoveToTarget(Drivetrain drivetrain, Limelight limelight) {
+  public MoveToTarget(Drivetrain drivetrain, Limelight limelight, XboxController primaryController) {
     // Use addRequirements() here to declare subsystem dependencies.
-
     movePID = new PIDController(0.6, 0.001, 0);
     movePID.setSetpoint(1.2);
     turnPID = new PIDController(0.05, 0, 0);
@@ -52,29 +49,23 @@ public class MoveToTarget extends CommandBase {
   public void execute() {
 
     if (m_debouncer.calculate(limeLight.getTV())) {
-      double output = movePID.calculate(limeLight.getArea());
+      double output = movePID.calculate(limeLightCalcDist.getDist());
       double turnOutput = turnPID.calculate(limeLight.getX());
       filter.calculate(output);
       filterTurn.calculate(output);
       // drivetrain.driveRaw(, 0);
 
-      // System.out.println("turn" + turnOutput + " go " + output);
+      System.out.println("turn" + turnOutput + " go " + output);
       driveTrain.driveRaw(MathUtil.clamp(output, -.2, .2), MathUtil.clamp(-turnOutput, -.2, .2));
+    } else {
+      driveTrain.driveRaw(0, 0);
     }
-  }
 
-  public void yesFinished() {
-    isFinishedButton = true;
-  }
-
-  public void noFinished() {
-    isFinishedButton = false;
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-
   }
 
   // Returns true when the command should end.

@@ -18,23 +18,12 @@ public class Turret extends SubsystemBase {
 
   }
 
-  // public double getVelocity() {
-  // return turretWheel.getEncoder().getVelocity();
-
-  // }
-
   public void shooterOn() {
-    vertTransport.set(-0.8);
-    turretWheel.set(-0.6);
+    vertTransport.set(1);
   }
 
   public void shooterOff() {
     vertTransport.set(0);
-    turretWheel.set(0);
-  }
-
-  public void shooterBack() {
-    vertTransport.set(0.5);
   }
 
   public void setTurretAim(double speed) {
