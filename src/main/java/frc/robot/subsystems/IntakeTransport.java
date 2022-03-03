@@ -33,7 +33,7 @@ public class IntakeTransport extends SubsystemBase {
 
     backSolenoid.set(Value.kReverse);
     frontSolenoid.set(Value.kReverse);
-    topSolenoid.set(Value.kReverse);
+    topSolenoid.set(Value.kForward);
 
   }
 

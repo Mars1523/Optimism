@@ -21,14 +21,15 @@ public class MoveToTarget extends CommandBase {
   private final PIDController turnPID;
   Limelight limeLight;
   Drivetrain driveTrain;
-  private XboxController primaryController;
-  LimeLightCalcDist limeLightCalcDist;
+
   SlewRateLimiter filter = new SlewRateLimiter(0.5);
   SlewRateLimiter filterTurn = new SlewRateLimiter(1);
   Debouncer m_debouncer = new Debouncer(0.3, Debouncer.DebounceType.kBoth);
+  boolean isFinishedButton = false;
 
-  public MoveToTarget(Drivetrain drivetrain, Limelight limelight, XboxController primaryController) {
+  public MoveToTarget(Drivetrain drivetrain, Limelight limelight) {
     // Use addRequirements() here to declare subsystem dependencies.
+
     movePID = new PIDController(0.6, 0.001, 0);
     movePID.setSetpoint(1.2);
     turnPID = new PIDController(0.05, 0, 0);
@@ -37,7 +38,6 @@ public class MoveToTarget extends CommandBase {
     addRequirements(limelight);
     this.driveTrain = drivetrain;
     this.limeLight = limelight;
-    this.primaryController = primaryController;
 
   }
 
@@ -51,27 +51,30 @@ public class MoveToTarget extends CommandBase {
   @Override
   public void execute() {
 
-    if (primaryController.getYButton() == true) {
+    if (m_debouncer.calculate(limeLight.getTV())) {
+      double output = movePID.calculate(limeLight.getArea());
+      double turnOutput = turnPID.calculate(limeLight.getX());
+      filter.calculate(output);
+      filterTurn.calculate(output);
+      // drivetrain.driveRaw(, 0);
 
-      if (m_debouncer.calculate(limeLight.getTV())) {
-        double output = movePID.calculate(limeLight.getArea());
-        double turnOutput = turnPID.calculate(limeLight.getX());
-        filter.calculate(output);
-        filterTurn.calculate(output);
-        // drivetrain.driveRaw(, 0);
-
-        // System.out.println("turn" + turnOutput + " go " + output);
-        driveTrain.driveRaw(MathUtil.clamp(output, -.2, .2), MathUtil.clamp(-turnOutput, -.2, .2));
-      } else {
-        driveTrain.driveRaw(0, 0);
-      }
-
+      // System.out.println("turn" + turnOutput + " go " + output);
+      driveTrain.driveRaw(MathUtil.clamp(output, -.2, .2), MathUtil.clamp(-turnOutput, -.2, .2));
     }
+  }
+
+  public void yesFinished() {
+    isFinishedButton = true;
+  }
+
+  public void noFinished() {
+    isFinishedButton = false;
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+
   }
 
   // Returns true when the command should end.
