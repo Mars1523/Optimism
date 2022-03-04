@@ -24,7 +24,7 @@ public class DriveForward extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    drivetrain.reset();
+    drivetrain.zeroSensors();
   }
 
   public double setDistance(double distance) {
@@ -36,8 +36,8 @@ public class DriveForward extends CommandBase {
   public void execute() {
     // System.out.println("DriveForward execute: " + drivetrain.getDistance());
     if (drivetrain.getDistance() < distance) {
-      drivetrain.driveRaw(0.5, 0);
-      // System.out.println(distance);
+      drivetrain.driveRaw(0.2, 0);
+
     }
   }
 
