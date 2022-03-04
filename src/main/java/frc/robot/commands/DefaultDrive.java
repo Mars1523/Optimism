@@ -67,14 +67,13 @@ public class DefaultDrive extends CommandBase {
 
     double output = movePID.calculate(limelight.getArea());
     double turnOutput = turnPID.calculate(limelight.getX());
-    filter.calculate(output);
-    filterTurn.calculate(output);
-
+    output = filter.calculate(output);
+    turnOutput = filterTurn.calculate(turnOutput);
     if (primaryController.getYButton()) {
       drivetrain.driveRaw(MathUtil.clamp(output, -.2, .2), MathUtil.clamp(-turnOutput, -.2, .2));
 
     } else {
-      if (fancyDriveEntry.getBoolean(true)) {
+      if (fancyDriveEntry.getBoolean(false)) {
         // Get the x speed. We are inverting this because Xbox controllers return
         // negative values when we push forward.
         double rawX = primaryController.getLeftX();

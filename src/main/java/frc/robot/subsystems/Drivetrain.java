@@ -106,7 +106,7 @@ public class Drivetrain extends SubsystemBase {
 
     double averageMove = (leftMotor + rightMotor) / 2;
 
-    return averageMove;
+    return -averageMove;
 
   }
 

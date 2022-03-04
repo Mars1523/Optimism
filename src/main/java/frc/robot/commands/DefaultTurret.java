@@ -46,6 +46,13 @@ public class DefaultTurret extends CommandBase {
 
     turretSys.setTurretAim(secondaryController.getLeftX());
 
+    if (turretSys.getVelocity() > 200) {
+      double liftSpeed = -0.8;
+      turretSys.setLift(liftSpeed);
+    } else {
+      turretSys.setLift(0);
+    }
+
   }
 
   @Override
