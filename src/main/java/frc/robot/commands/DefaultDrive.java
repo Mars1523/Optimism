@@ -70,7 +70,8 @@ public class DefaultDrive extends CommandBase {
     output = filter.calculate(output);
     turnOutput = filterTurn.calculate(turnOutput);
     if (primaryController.getYButton()) {
-      drivetrain.driveRaw(MathUtil.clamp(output, -.2, .2), MathUtil.clamp(-turnOutput, -.2, .2));
+      drivetrain.driveRaw(MathUtil.clamp(output, -.2, .2),
+          MathUtil.clamp(-turnOutput, -.2, .2));
 
     } else {
       if (fancyDriveEntry.getBoolean(false)) {

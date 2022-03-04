@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.math.controller.PIDController;
@@ -63,6 +64,11 @@ public class Drivetrain extends SubsystemBase {
 
     rightMotors.setInverted(true);
     robotDrive.setSafetyEnabled(false);
+    SupplyCurrentLimitConfiguration currLimitCfg = new SupplyCurrentLimitConfiguration(true, 20, 30, .25);
+    leftFront.configSupplyCurrentLimit(currLimitCfg);
+    leftRear.configSupplyCurrentLimit(currLimitCfg);
+    rightFront.configSupplyCurrentLimit(currLimitCfg);
+    rightRear.configSupplyCurrentLimit(currLimitCfg);
 
   }
 

@@ -40,7 +40,7 @@ public class RobotContainer {
   private final DefaultIntakeTransport defaultIntakeTransport = new DefaultIntakeTransport(primaryController, intrans);
   // private final DefaultLimelight defaultLimelight = new
   // DefaultLimelight(primaryController, limelight);\
-  private final DriveForward driveForward = new DriveForward(drivetrain, 0.2);
+  private final DriveForward driveForward = new DriveForward(drivetrain, 1.3);
   // private final LimeLightToggle limeLightToggle = new LimeLightToggle();
 
   // DriveForward driveForward;
