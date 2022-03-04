@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.MoveToTarget;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Limelight;
 
@@ -17,7 +16,7 @@ public class Robot extends TimedRobot {
   private Command autonomousCommand;
   Drivetrain drivetrain;
   Limelight limelight;
-  MoveToTarget moveToTarget;
+
   private RobotContainer robotContainer;
   private XboxController primaryController = new XboxController(0);
   // private MoveToTarget moveToTarget = new MoveToTarget(drivetrain,
@@ -76,7 +75,6 @@ public class Robot extends TimedRobot {
     if (autonomousCommand != null) {
       autonomousCommand.cancel();
     }
-
     // new JoystickButton(primaryController,
     // XboxController.Button.kY.value)
     // .whileHeld(new MoveToTarget(drivetrain, limelight, primaryController));
@@ -94,7 +92,6 @@ public class Robot extends TimedRobot {
     // } else if (primaryController.getYButtonReleased()) {
     // moveToTarget.cancel();
     // }
-
   }
 
   @Override
