@@ -68,10 +68,10 @@ public class Turret extends SubsystemBase {
 
   @Override
   public void periodic() {
-    System.out.println(encoder.get());
+    // System.out.println(encoder.get());
 
-    double pidOutput = pidC.calculate(encoder.get());
-    pidOutput *= .95;
-    turretTurn.set(pidOutput);
+    // double pidOutput = pidC.calculate(encoder.get());
+    // pidOutput *= .95;
+    // turretTurn.set(pidOutput);
   }
 }
