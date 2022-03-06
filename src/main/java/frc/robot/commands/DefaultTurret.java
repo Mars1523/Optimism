@@ -47,6 +47,14 @@ public class DefaultTurret extends CommandBase {
       turretSys.shooterOff();
     }
 
+    if (secondaryController.getAButtonPressed()) {
+      turretSys.setToLimelight();
+    }
+
+    if (primaryController.getAButtonReleased()) {
+      turretSys.setToManuel();
+    }
+
     double turretControl = secondaryController.getLeftX();
     System.out.println(secondaryController.getLeftX());
     if (Math.abs(turretControl) < .09) {

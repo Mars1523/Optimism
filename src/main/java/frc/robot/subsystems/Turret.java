@@ -15,19 +15,28 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Turret extends SubsystemBase {
 
+  private Limelight limelight;
+
   private final Spark turretTurn = new Spark(1);
   private final CANSparkMax turretWheel = new CANSparkMax(12, MotorType.kBrushless);
   private final Spark vertTransport = new Spark(2);
 
   private final Encoder encoder = new Encoder(0, 1, true);
-  private final PIDController pidC = new PIDController(0.00075, 0, 0);
+  private final PIDController manuelPidC = new PIDController(0.00075, 0, 0);
+  private final PIDController limelightPidC = new PIDController(0.00075, 0, 0);
 
   private final ComplexWidget turetAngleEntry = Shuffleboard.getTab("Debug").add("Turret Angle", encoder);
-  private final ComplexWidget turetPidEntry = Shuffleboard.getTab("Debug").add("Turret PID", pidC);
+  private final ComplexWidget turetPidEntry = Shuffleboard.getTab("Debug").add("Turret PID", manuelPidC);
+
+  public enum TurretPIDMode {
+    limelightMode, manuelMode
+  }
+
+  private TurretPIDMode currentPIDMode = TurretPIDMode.manuelMode;
 
   public Turret() {
     // pidC.setSetpoint(setpoint);
-    pidC.disableContinuousInput();
+    manuelPidC.disableContinuousInput();
   }
 
   public double getVelocity() {
@@ -58,20 +67,33 @@ public class Turret extends SubsystemBase {
   }
 
   public double getTurretAngle() {
-    return pidC.getSetpoint();
+    return manuelPidC.getSetpoint();
   }
 
   public void setTurretAngle(double numBer) {
 
-    pidC.setSetpoint(MathUtil.clamp(numBer, -3600, 7000));
+    manuelPidC.setSetpoint(MathUtil.clamp(numBer, -3600, 7000));
+  }
+
+  public void setToLimelight() {
+    currentPIDMode = TurretPIDMode.limelightMode;
+  }
+
+  public void setToManuel() {
+    currentPIDMode = TurretPIDMode.manuelMode;
   }
 
   @Override
   public void periodic() {
     // System.out.println(encoder.get());
 
-    // double pidOutput = pidC.calculate(encoder.get());
-    // pidOutput *= .95;
-    // turretTurn.set(pidOutput);
+    double manuelPidOutput = manuelPidC.calculate(encoder.get());
+    double limelightPidOutput = limelightPidC.calculate(limelight.getX());
+
+    if (currentPIDMode == TurretPIDMode.manuelMode) {
+      turretTurn.set(manuelPidOutput * 0.8);
+    } else if (currentPIDMode == TurretPIDMode.limelightMode) {
+      turretTurn.set(limelightPidOutput * 0.8);
+    }
   }
 }
