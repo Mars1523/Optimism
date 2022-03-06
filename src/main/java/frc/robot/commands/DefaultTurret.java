@@ -28,10 +28,14 @@ public class DefaultTurret extends CommandBase {
 
   @Override
   public void execute() {
-    if (primaryController.getXButtonPressed() == true) {
+    if (primaryController.getXButton() == true) {
       turretSys.shooterOn();
     }
     if (primaryController.getXButtonReleased() == true) {
+      turretSys.shooterOff();
+    }
+
+    if (turretSys.getVelocity() < -3100) {
       turretSys.shooterOff();
     }
 
@@ -56,22 +60,22 @@ public class DefaultTurret extends CommandBase {
     }
 
     double turretControl = secondaryController.getLeftX();
-    System.out.println(secondaryController.getLeftX());
+    // System.out.println(secondaryController.getLeftX());
     if (Math.abs(turretControl) < .09) {
       turretControl = 0;
     }
 
     // turretSys.setTurretAim(secondaryController.getLeftX());
-    turretSys.setTurretAngle(turretSys.getTurretAngle() + turretControl * 45);
+    // turretSys.setTurretAngle(turretSys.getTurretAngle() + turretControl * 45);
 
     if (turretSys.getVelocity() < -3000) {
       // if (secondaryController.getStartButton()) {
-      double liftSpeed = -0.6;
+      double liftSpeed = -0.8;
       turretSys.setLift(liftSpeed);
     } else {
       turretSys.setLift(0);
     }
-    System.out.println(turretSys.getVelocity());
+    // System.out.println(turretSys.getVelocity());
   }
 
   @Override

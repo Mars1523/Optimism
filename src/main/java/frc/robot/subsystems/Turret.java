@@ -59,7 +59,7 @@ public class Turret extends SubsystemBase {
   }
 
   public void setTurretAim(double speed) {
-    // turretTurn.set(speed);
+    turretTurn.set(speed);
   }
 
   public void setLift(double liftSpeed) {
@@ -71,7 +71,7 @@ public class Turret extends SubsystemBase {
   }
 
   public void setTurretAngle(double numBer) {
-
+    System.out.println(numBer);
     manuelPidC.setSetpoint(MathUtil.clamp(numBer, -3600, 7000));
   }
 
@@ -87,13 +87,13 @@ public class Turret extends SubsystemBase {
   public void periodic() {
     // System.out.println(encoder.get());
 
-    double manuelPidOutput = manuelPidC.calculate(encoder.get());
-    double limelightPidOutput = limelightPidC.calculate(limelight.getX());
+    // double manuelPidOutput = manuelPidC.calculate(encoder.get());
+    // double limelightPidOutput = limelightPidC.calculate(limelight.getX());
 
-    if (currentPIDMode == TurretPIDMode.manuelMode) {
-      turretTurn.set(manuelPidOutput * 0.8);
-    } else if (currentPIDMode == TurretPIDMode.limelightMode) {
-      turretTurn.set(limelightPidOutput * 0.8);
-    }
+    // if (currentPIDMode == TurretPIDMode.manuelMode) {
+    // turretTurn.set(manuelPidOutput * 0.8);
+    // } else if (currentPIDMode == TurretPIDMode.limelightMode) {
+    // turretTurn.set(limelightPidOutput * 0.8);
+    // }
   }
 }

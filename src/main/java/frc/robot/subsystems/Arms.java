@@ -21,7 +21,7 @@ public class Arms extends SubsystemBase {
   }
 
   public void armOutStart() {
-    armS.set(0.8);
+    armS.set(-0.8);
   }
 
   public void armStop() {
@@ -29,7 +29,7 @@ public class Arms extends SubsystemBase {
   }
 
   public void armInStart() {
-    armS.set(-0.5);
+    armS.set(0.5);
   }
 
   @Override

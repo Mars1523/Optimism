@@ -8,6 +8,7 @@ import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.SuppliedValueWidget;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Limelight;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -16,6 +17,7 @@ import frc.robot.Constants;
 public class DefaultDrive extends CommandBase {
   private XboxController primaryController;
   private Drivetrain drivetrain;
+  private XboxController secondaryController;
 
   SlewRateLimiter filter = new SlewRateLimiter(0.5);
   SlewRateLimiter filterTurn = new SlewRateLimiter(1);
@@ -32,14 +34,34 @@ public class DefaultDrive extends CommandBase {
   private final PIDController turnPID;
   private final Limelight limelight;
 
-  public DefaultDrive(Drivetrain drivetrain, XboxController primaryController, Limelight m_Limelight) {
+  private double getLimelightArea() {
+    return limelight.getArea();
+  }
+
+  private double getShooterEnabled() {
+    if (primaryController.getYButton()) {
+      return 25;
+    } else {
+      return 0;
+    }
+  }
+
+  private final SuppliedValueWidget<Double> limeLightArea = Shuffleboard.getTab("Drive")
+      .addNumber("Area", this::getLimelightArea);
+
+  private final SuppliedValueWidget<Double> yPressed = Shuffleboard.getTab("Drive")
+      .addNumber("YPress", this::getShooterEnabled);
+
+  public DefaultDrive(Drivetrain drivetrain, XboxController primaryController, Limelight m_Limelight,
+      XboxController secondaryController) {
     addRequirements(drivetrain);
     limelight = m_Limelight;
     this.primaryController = primaryController;
     this.drivetrain = drivetrain;
+    this.secondaryController = secondaryController;
 
     movePID = new PIDController(0.6, 0.001, 0);
-    movePID.setSetpoint(1.2);
+    movePID.setSetpoint(1.5);
     turnPID = new PIDController(0.05, 0, 0);
     turnPID.setSetpoint(0);
 
@@ -69,10 +91,15 @@ public class DefaultDrive extends CommandBase {
     double turnOutput = turnPID.calculate(limelight.getX());
     output = filter.calculate(output);
     turnOutput = filterTurn.calculate(turnOutput);
-    if (primaryController.getYButton()) {
-      drivetrain.driveRaw(MathUtil.clamp(output, -.2, .2),
-          MathUtil.clamp(-turnOutput, -.2, .2));
 
+    if (primaryController.getYButton()) {
+
+      drivetrain.driveRaw(0,
+          MathUtil.clamp(turnOutput, -.2, .2));
+
+      // } else if (secondaryController.getYButton()) {
+      // drivetrain.driveRaw(MathUtil.clamp(-output, -.2, .2),
+      // MathUtil.clamp(turnOutput, -.2, .2));
     } else {
       if (fancyDriveEntry.getBoolean(false)) {
         // Get the x speed. We are inverting this because Xbox controllers return
