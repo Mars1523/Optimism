@@ -21,16 +21,24 @@ public class FinalAuto extends SequentialCommandGroup {
     // new Timeout
 
     addCommands(
-        new DriveForward(drivetrain, 1.3),
+        // new DriveForward(drivetrain, 1.3),
         new ParallelRaceGroup(new RunCommand(() -> {
-          turret.shooterOn();
-          if (turret.getVelocity() < -3000) {
-            // if (secondaryController.getStartButton()) {
-            double liftSpeed = -0.8;
-            turret.setLift(liftSpeed);
-          } else {
-            turret.setLift(0);
+
+          if (drivetrain.getDistance() < 1.3) {
+            drivetrain.driveRaw(0.2, 0);
+          } else if (drivetrain.getDistance() > 1.3) {
+            drivetrain.driveRaw(0, 0);
+            turret.shooterOn();
+            if (turret.getVelocity() < -3000) {
+              // if (secondaryController.getStartButton()) {
+              double liftSpeed = -0.8;
+              turret.setLift(liftSpeed);
+            } else {
+              turret.setLift(0);
+            }
           }
-        }, turret)));
+        }, turret)
+
+        ));
   }
 }

@@ -38,6 +38,8 @@ public class DriveForward extends CommandBase {
     if (drivetrain.getDistance() < distance) {
       drivetrain.driveRaw(0.2, 0);
 
+    } else {
+      drivetrain.driveRaw(0, 0);
     }
   }
 
