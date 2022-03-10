@@ -92,7 +92,10 @@ public class DefaultTurret extends CommandBase {
     } else {
       turretSys.setLift(0);
     }
-    // System.out.println(turretSys.getVelocity());
+
+    if (primaryController.getBackButton()) {
+      turretSys.setLift(.8);
+    }
   }
 
   @Override
