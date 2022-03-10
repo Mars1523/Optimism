@@ -22,17 +22,28 @@ public class DefaultTurret extends CommandBase {
 
   }
 
+  boolean rightTriggerActivated = false;
+
   @Override
   public void initialize() {
   }
 
   @Override
   public void execute() {
-    if (primaryController.getXButton() == true) {
-      turretSys.shooterOn(3600);
+    if (primaryController.getXButtonPressed() == true) {
+      turretSys.shooterLower();
     }
+
     if (primaryController.getXButtonReleased() == true) {
       turretSys.shooterOff();
+    }
+
+    if (primaryController.getRightTriggerAxis() > 0.15) {
+      turretSys.shootLimeLight();
+      rightTriggerActivated = true;
+    } else if (rightTriggerActivated) {
+      turretSys.shooterOff();
+      rightTriggerActivated = false;
     }
 
     if (secondaryController.getXButtonPressed()) {
@@ -51,11 +62,14 @@ public class DefaultTurret extends CommandBase {
       turretSys.setToLimelight();
     }
 
-    if (primaryController.getBButton() == true) {
+    if (primaryController.getBButtonPressed() == true) {
+      System.out.println("B press");
       turretSys.shootLimeLight();
     }
     if (primaryController.getBButtonReleased()) {
-      turretSys.shootLimeLightOff();
+      System.out.println("B release");
+
+      turretSys.shooterOff();
     }
 
     if (primaryController.getAButtonReleased()) {

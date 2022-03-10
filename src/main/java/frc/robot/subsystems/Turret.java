@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.VelocityMeasPeriod;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ControlType;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.MathUtil;
@@ -46,11 +47,12 @@ public class Turret extends SubsystemBase {
     manuelPidC.disableContinuousInput();
 
     turretWheel.restoreFactoryDefaults();
+    turretWheel.setIdleMode(IdleMode.kCoast);
     velocPID.setP(0.00024);
     velocPID.setI(0);
     velocPID.setD(0);
     velocPID.setFF(0.00018);
-    velocPID.setOutputRange(-0.85, 0.2);
+    velocPID.setOutputRange(-0.85, 0.1);
     this.limelight = limelight;
 
   }
@@ -72,14 +74,20 @@ public class Turret extends SubsystemBase {
     }
   }
 
+  public void shooterLower() {
+    shooterOn(1500);
+  }
+
   public void shooterOn(double setPoint) {
     // vertTransport.set(-0.8);
     // turretWheel.set(-0.6);
     pidSetpoint = -setPoint;
+    System.out.println("ShootOn");
     velocPID.setReference(pidSetpoint, ControlType.kVelocity);
   }
 
   public void shooterOff() {
+    System.out.println("shootoff");
     vertTransport.set(0);
     // turretWheel.set(0);
     pidSetpoint = 0;
@@ -110,22 +118,23 @@ public class Turret extends SubsystemBase {
   public void shootLimeLight() {
 
     if (limelight.getTV() == false) {
-      shootLimeLightOff();
+      shooterOff();
       return;
     }
 
     double area = limelight.getArea();
 
-    double distance = 3.87 * Math.exp(-0.0184) * area;
-    double rpm = 9.23 * distance + 1674;
+    double distance = 80.66 + -56.7 * Math.log(area);// 180 * Math.exp(-0.856) * area;
+    double rpm = 15 * distance + 1750;
     rpm = -rpm;
-    pidSetpoint = rpm;
-    System.out.println(rpm);
-    velocPID.setReference(rpm, ControlType.kVelocity);
-  }
 
-  public void shootLimeLightOff() {
-    velocPID.setReference(0, ControlType.kVelocity);
+    if (!Double.isFinite(rpm)) {
+      return;
+    }
+    pidSetpoint = rpm;
+    System.out.println(distance + " : " + rpm);
+    System.out.println("shootLimelight");
+    velocPID.setReference(pidSetpoint, ControlType.kVelocity);
   }
 
   public void setToLimelight() {
@@ -138,6 +147,7 @@ public class Turret extends SubsystemBase {
 
   @Override
   public void periodic() {
+    System.out.println(pidSetpoint);
     // System.out.println(encoder.get());
 
     // double manuelPidOutput = manuelPidC.calculate(encoder.get());
