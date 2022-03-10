@@ -33,7 +33,7 @@ public class AutoShoot extends CommandBase {
 
     turretSys.shooterOn();
 
-    if (turretSys.getVelocity() < -3000) {
+    if (turretSys.isReadyToShoot()) {
       // if (secondaryController.getStartButton()) {
       double liftSpeed = -0.8;
       turretSys.setLift(liftSpeed);

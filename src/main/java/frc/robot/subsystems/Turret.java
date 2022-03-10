@@ -1,8 +1,10 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.VelocityMeasPeriod;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.MathUtil;
@@ -35,34 +37,52 @@ public class Turret extends SubsystemBase {
 
   private TurretPIDMode currentPIDMode = TurretPIDMode.manuelMode;
 
+  private SparkMaxPIDController velocPID = turretWheel.getPIDController();
+
+  private double pidSetpoint = 0;
+
   public Turret() {
     // pidC.setSetpoint(setpoint);
     manuelPidC.disableContinuousInput();
 
     turretWheel.restoreFactoryDefaults();
-    SparkMaxPIDController velocPID = turretWheel.getPIDController();
-
     velocPID.setP(0.00024);
     velocPID.setI(0);
     velocPID.setD(0);
     velocPID.setFF(0.00018);
-    velocPID.setOutputRange(-0.6, 0.6);
+    velocPID.setOutputRange(-0.6, 0.2);
 
   }
 
-  public double getVelocity() {
+  private double getVelocity() {
     return turretWheel.getEncoder().getVelocity();
 
   }
 
+  public boolean isReadyToShoot() {
+
+    double part1 = pidSetpoint - getVelocity();
+    double part2 = Math.abs(part1);
+
+    if (part2 < 400 && pidSetpoint != 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   public void shooterOn() {
     // vertTransport.set(-0.8);
-    turretWheel.set(-0.6);
+    // turretWheel.set(-0.6);
+    pidSetpoint = -3000;
+    velocPID.setReference(pidSetpoint, ControlType.kVelocity);
   }
 
   public void shooterOff() {
     // vertTransport.set(0);
-    turretWheel.set(0);
+    // turretWheel.set(0);
+    pidSetpoint = 0;
+    velocPID.setReference(pidSetpoint, ControlType.kVelocity);
   }
 
   public void shooterBack() {

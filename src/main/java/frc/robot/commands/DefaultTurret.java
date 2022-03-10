@@ -35,10 +35,6 @@ public class DefaultTurret extends CommandBase {
       turretSys.shooterOff();
     }
 
-    if (turretSys.getVelocity() < -3100) {
-      turretSys.shooterOff();
-    }
-
     if (secondaryController.getXButtonPressed()) {
       turretSys.setTurretAngle(0);
     }
@@ -68,7 +64,7 @@ public class DefaultTurret extends CommandBase {
     // turretSys.setTurretAim(secondaryController.getLeftX());
     // turretSys.setTurretAngle(turretSys.getTurretAngle() + turretControl * 45);
 
-    if (turretSys.getVelocity() < -3000) {
+    if (turretSys.isReadyToShoot()) {
       // if (secondaryController.getStartButton()) {
       double liftSpeed = -0.8;
       turretSys.setLift(liftSpeed);
