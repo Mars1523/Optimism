@@ -2,6 +2,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.MathUtil;
@@ -37,6 +38,16 @@ public class Turret extends SubsystemBase {
   public Turret() {
     // pidC.setSetpoint(setpoint);
     manuelPidC.disableContinuousInput();
+
+    turretWheel.restoreFactoryDefaults();
+    SparkMaxPIDController velocPID = turretWheel.getPIDController();
+
+    velocPID.setP(0.00024);
+    velocPID.setI(0);
+    velocPID.setD(0);
+    velocPID.setFF(0.00018);
+    velocPID.setOutputRange(-0.6, 0.6);
+
   }
 
   public double getVelocity() {
