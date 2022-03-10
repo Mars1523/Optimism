@@ -50,7 +50,7 @@ public class Turret extends SubsystemBase {
     velocPID.setI(0);
     velocPID.setD(0);
     velocPID.setFF(0.00018);
-    velocPID.setOutputRange(-0.6, 0.2);
+    velocPID.setOutputRange(-0.85, 0.2);
     this.limelight = limelight;
 
   }
@@ -72,15 +72,15 @@ public class Turret extends SubsystemBase {
     }
   }
 
-  public void shooterOn() {
+  public void shooterOn(double setPoint) {
     // vertTransport.set(-0.8);
     // turretWheel.set(-0.6);
-    pidSetpoint = -3000;
+    pidSetpoint = -setPoint;
     velocPID.setReference(pidSetpoint, ControlType.kVelocity);
   }
 
   public void shooterOff() {
-    // vertTransport.set(0);
+    vertTransport.set(0);
     // turretWheel.set(0);
     pidSetpoint = 0;
     velocPID.setReference(pidSetpoint, ControlType.kVelocity);

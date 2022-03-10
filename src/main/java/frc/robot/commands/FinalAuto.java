@@ -28,7 +28,7 @@ public class FinalAuto extends SequentialCommandGroup {
             drivetrain.driveRaw(0.2, 0);
           } else if (drivetrain.getDistance() > 1.3) {
             drivetrain.driveRaw(0, 0);
-            turret.shooterOn();
+            turret.shooterOn(3000);
             if (turret.isReadyToShoot()) {
               // if (secondaryController.getStartButton()) {
               double liftSpeed = -0.8;

@@ -5,20 +5,17 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.IntakeTransport;
 
-public class AutoShoot extends CommandBase {
-  private Turret turretSys;
-  boolean turnOff = false;
+public class AutoHorizOff extends CommandBase {
+  private IntakeTransport intakeTransport;
 
-  /** Creates a new AutoShoot. */
-
-  public AutoShoot(Turret turretSys, boolean turnOff) {
+  /** Creates a new AutoHorizOn. */
+  public AutoHorizOff(IntakeTransport intakeTransport) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(turretSys);
-    this.turretSys = turretSys;
-    this.turnOff = turnOff;
+
+    addRequirements(intakeTransport);
+    this.intakeTransport = intakeTransport;
 
   }
 
@@ -30,27 +27,7 @@ public class AutoShoot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    if (turnOff == true) {
-      turretSys.shooterOff();
-
-      return;
-    }
-
-    turretSys.shooterOn(3000);
-
-    if (turretSys.isReadyToShoot()) {
-      // if (secondaryController.getStartButton())
-      double liftSpeed = -0.8;
-      turretSys.setLift(liftSpeed);
-
-    } else {
-      turretSys.setLift(0);
-    }
-  }
-
-  public void turnOffShooter() {
-    turretSys.shooterOff();
+    intakeTransport.horizTransportOff();
   }
 
   // Called once the command ends or is interrupted.
@@ -61,7 +38,6 @@ public class AutoShoot extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-
     return false;
   }
 }

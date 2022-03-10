@@ -59,6 +59,14 @@ public class IntakeTransport extends SubsystemBase {
     horizTransport.set(0.5);
   }
 
+  public void horizTransportOn() {
+    horizTransport.set(0.5);
+  }
+
+  public void horizTransportOff() {
+    horizTransport.set(0);
+  }
+
   public void wristUpBack() {
     frontSolenoid.set(Value.kReverse);
     intakeBack.set(0);

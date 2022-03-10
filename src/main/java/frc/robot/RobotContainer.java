@@ -52,7 +52,7 @@ public class RobotContainer {
   // DriveForward driveForward;
   // private final MoveToTarget moveToTarget = new MoveToTarget(drivetrain,
   // limelight);
-  private final FinalAuto2 finalAuto2 = new FinalAuto2(driveForward, drivetrain, turret);
+  private final FinalAuto2 finalAuto2 = new FinalAuto2(driveForward, drivetrain, turret, intrans);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
