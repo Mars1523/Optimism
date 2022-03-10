@@ -41,7 +41,7 @@ public class Turret extends SubsystemBase {
 
   private double pidSetpoint = 0;
 
-  public Turret() {
+  public Turret(Limelight limelight) {
     // pidC.setSetpoint(setpoint);
     manuelPidC.disableContinuousInput();
 
@@ -51,6 +51,7 @@ public class Turret extends SubsystemBase {
     velocPID.setD(0);
     velocPID.setFF(0.00018);
     velocPID.setOutputRange(-0.6, 0.2);
+    this.limelight = limelight;
 
   }
 
@@ -104,6 +105,27 @@ public class Turret extends SubsystemBase {
   public void setTurretAngle(double numBer) {
     System.out.println(numBer);
     manuelPidC.setSetpoint(MathUtil.clamp(numBer, -3600, 7000));
+  }
+
+  public void shootLimeLight() {
+
+    if (limelight.getTV() == false) {
+      shootLimeLightOff();
+      return;
+    }
+
+    double area = limelight.getArea();
+
+    double distance = 3.87 * Math.exp(-0.0184) * area;
+    double rpm = 9.23 * distance + 1674;
+    rpm = -rpm;
+    pidSetpoint = rpm;
+    System.out.println(rpm);
+    velocPID.setReference(rpm, ControlType.kVelocity);
+  }
+
+  public void shootLimeLightOff() {
+    velocPID.setReference(0, ControlType.kVelocity);
   }
 
   public void setToLimelight() {

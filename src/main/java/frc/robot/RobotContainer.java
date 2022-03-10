@@ -28,8 +28,8 @@ public class RobotContainer {
   private final Arms arms = new Arms();
   private final Drivetrain drivetrain = new Drivetrain();
   private final IntakeTransport intrans = new IntakeTransport(pCM);
-  private final Turret turret = new Turret();
   private final Limelight limelight = new Limelight();
+  private final Turret turret = new Turret(limelight);
 
   // controllers
   private final XboxController primaryController = new XboxController(0);

@@ -51,6 +51,13 @@ public class DefaultTurret extends CommandBase {
       turretSys.setToLimelight();
     }
 
+    if (primaryController.getBButton() == true) {
+      turretSys.shootLimeLight();
+    }
+    if (primaryController.getBButtonReleased()) {
+      turretSys.shootLimeLightOff();
+    }
+
     if (primaryController.getAButtonReleased()) {
       turretSys.setToManuel();
     }
