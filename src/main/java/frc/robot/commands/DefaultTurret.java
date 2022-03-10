@@ -83,7 +83,7 @@ public class DefaultTurret extends CommandBase {
     }
 
     // turretSys.setTurretAim(secondaryController.getLeftX());
-    // turretSys.setTurretAngle(turretSys.getTurretAngle() + turretControl * 45);
+    turretSys.setTurretAngle(turretSys.getTurretAngle() + turretControl * 77);
 
     if (turretSys.isReadyToShoot()) {
       // if (secondaryController.getStartButton()) {

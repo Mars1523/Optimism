@@ -26,7 +26,7 @@ public class Turret extends SubsystemBase {
   private final Spark vertTransport = new Spark(2);
 
   private final Encoder encoder = new Encoder(0, 1, true);
-  private final PIDController manuelPidC = new PIDController(0.00075, 0, 0);
+  private final PIDController manuelPidC = new PIDController(0.00086, 0, 0);
   private final PIDController limelightPidC = new PIDController(0.00075, 0, 0);
 
   private final ComplexWidget turetAngleEntry = Shuffleboard.getTab("Debug").add("Turret Angle", encoder);
@@ -112,7 +112,7 @@ public class Turret extends SubsystemBase {
 
   public void setTurretAngle(double numBer) {
     System.out.println(numBer);
-    manuelPidC.setSetpoint(MathUtil.clamp(numBer, -3600, 7000));
+    manuelPidC.setSetpoint(MathUtil.clamp(numBer, -3600, 3600));
   }
 
   public void shootLimeLight() {
@@ -148,14 +148,18 @@ public class Turret extends SubsystemBase {
   @Override
   public void periodic() {
     System.out.println(pidSetpoint);
+
+    double manuelPidOutput = manuelPidC.calculate(encoder.getDistance());
+
     // System.out.println(encoder.get());
 
-    // double manuelPidOutput = manuelPidC.calculate(encoder.get());
     // double limelightPidOutput = limelightPidC.calculate(limelight.getX());
 
     // if (currentPIDMode == TurretPIDMode.manuelMode) {
-    // turretTurn.set(manuelPidOutput * 0.8);
-    // } else if (currentPIDMode == TurretPIDMode.limelightMode) {
+    turretTurn.set(manuelPidOutput * 0.85);
+    // }
+
+    // else if (currentPIDMode == TurretPIDMode.limelightMode) {
     // turretTurn.set(limelightPidOutput * 0.8);
     // }
   }
