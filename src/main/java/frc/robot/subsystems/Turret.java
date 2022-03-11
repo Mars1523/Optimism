@@ -80,7 +80,11 @@ public class Turret extends SubsystemBase {
   }
 
   public void shooterLower() {
-    shooterOn(1500);
+    shooterOn(1850);
+  }
+
+  public void shooterHigh() {
+    shooterOn(3500);
   }
 
   public void shooterOn(double setPoint) {

@@ -43,6 +43,14 @@ public class DefaultTurret extends CommandBase {
       turretSys.shooterOff();
     }
 
+    if (primaryController.getYButtonPressed() == true) {
+      turretSys.shooterHigh();
+    }
+
+    if (primaryController.getYButtonReleased() == true) {
+      turretSys.shooterOff();
+    }
+
     if (primaryController.getRightTriggerAxis() > 0.15) {
       turretSys.shootLimeLight();
       rightTriggerActivated = true;

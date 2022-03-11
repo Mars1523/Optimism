@@ -38,19 +38,8 @@ public class DefaultDrive extends CommandBase {
     return limelight.getArea();
   }
 
-  private double getShooterEnabled() {
-    if (primaryController.getYButton()) {
-      return 25;
-    } else {
-      return 0;
-    }
-  }
-
   private final SuppliedValueWidget<Double> limeLightArea = Shuffleboard.getTab("Drive")
       .addNumber("Area", this::getLimelightArea);
-
-  private final SuppliedValueWidget<Double> yPressed = Shuffleboard.getTab("Drive")
-      .addNumber("YPress", this::getShooterEnabled);
 
   public DefaultDrive(Drivetrain drivetrain, XboxController primaryController, Limelight m_Limelight,
       XboxController secondaryController) {
