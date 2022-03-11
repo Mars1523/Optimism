@@ -7,10 +7,12 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.IntakeTransport;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Turret;
 
 public class FinalAuto extends CommandBase {
@@ -19,14 +21,17 @@ public class FinalAuto extends CommandBase {
   DriveForward driveForward;
   Turret turret;
   IntakeTransport intake;
+  private Limelight limelight;
 
   /** Creates a new FinalAuto2. */
-  public FinalAuto(DriveForward driveForward, Drivetrain drivetrain, Turret turret, IntakeTransport intake) {
+  public FinalAuto(DriveForward driveForward, Drivetrain drivetrain, Limelight limelight, Turret turret,
+      IntakeTransport intake) {
 
     addRequirements(drivetrain);
     this.drivetrain = drivetrain;
     this.driveForward = driveForward;
     this.turret = turret;
+    this.limelight = limelight;
     this.intake = intake;
   }
 
@@ -43,7 +48,7 @@ public class FinalAuto extends CommandBase {
         new DriveForward(drivetrain, 1),
         new ParallelCommandGroup(
             new IntakeAutoOn(intake).withTimeout(0.1),
-            new AutoLimelightShoot(turret, false).withTimeout(3.5),
+            new AutoLimelightShoot(turret, limelight, false).withTimeout(4.5),
             new DriveForward(drivetrain, 0.7)),
         new IntakeAutoOff(intake).withTimeout(0.1),
         new AutoShoot(turret, true).withTimeout(0.1)).schedule();

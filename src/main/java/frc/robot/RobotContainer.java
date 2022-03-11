@@ -5,7 +5,10 @@ import javax.sound.sampled.LineEvent;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PneumaticsControlModule;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import frc.robot.commands.DefaultArms;
 import frc.robot.commands.DefaultDrive;
 import frc.robot.commands.DefaultIntakeTransport;
@@ -55,12 +58,14 @@ public class RobotContainer {
   // limelight);
   // private final FinalAuto2 finalAuto2 = new FinalAuto2(driveForward,
   // drivetrain, turret, intrans);
-  private final FinalAuto finalAuto = new FinalAuto(driveForward, drivetrain, turret, intrans);
+  private final FinalAuto finalAuto = new FinalAuto(driveForward, drivetrain, limelight, turret, intrans);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    // Shuffleboard.getTab("Debug").add(new PowerDistribution(1, ModuleType.kCTRE));
+
     drivetrain.setDefaultCommand(defaultDrive);
     arms.setDefaultCommand(defaultArms);
     intrans.setDefaultCommand(defaultIntakeTransport);

@@ -6,18 +6,21 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Turret;
 
 public class AutoLimelightShoot extends CommandBase {
   private Turret turretSys;
   boolean turnOff = false;
+  private Limelight limelight;
 
   /** Creates a new AutoShoot. */
 
-  public AutoLimelightShoot(Turret turretSys, boolean turnOff) {
+  public AutoLimelightShoot(Turret turretSys, Limelight limelight, boolean turnOff) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(turretSys);
     this.turretSys = turretSys;
+    this.limelight = limelight;
     this.turnOff = turnOff;
 
   }
@@ -33,9 +36,10 @@ public class AutoLimelightShoot extends CommandBase {
 
     if (turnOff == true) {
       turretSys.shooterOff();
-
       return;
     }
+
+    turretSys.setTurretAngle(turretSys.getTurretAngle() + limelight.getX() * 2);
 
     turretSys.shootLimeLight();
 
