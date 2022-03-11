@@ -91,7 +91,7 @@ public class DefaultTurret extends CommandBase {
     if (turretSys.getAimMode() == TurretPIDMode.manuelMode) {
       turretSys.setTurretAngle(turretSys.getTurretAngle() + turretControl * 77);
     } else {
-      turretSys.setTurretAngle(turretSys.getTurretAngle() + limelight.getX() * 2);
+      turretSys.setTurretAngle(turretSys.getTurretAngle() + (limelight.getX() - 4) * 2);
 
     }
 
