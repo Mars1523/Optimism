@@ -5,21 +5,25 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.Turret.TurretPIDMode;
 
 public class DefaultTurret extends CommandBase {
 
   private XboxController secondaryController;
   private Turret turretSys;
   private XboxController primaryController;
+  private Limelight limelight;
 
-  public DefaultTurret(XboxController secondaryController, Turret turretSys, XboxController primaryController) {
+  public DefaultTurret(XboxController secondaryController, Turret turretSys, XboxController primaryController,
+      Limelight limelight) {
 
     addRequirements(turretSys);
     this.turretSys = turretSys;
     this.secondaryController = secondaryController;
     this.primaryController = primaryController;
-
+    this.limelight = limelight;
   }
 
   boolean rightTriggerActivated = false;
@@ -72,7 +76,7 @@ public class DefaultTurret extends CommandBase {
       turretSys.shooterOff();
     }
 
-    if (primaryController.getAButtonReleased()) {
+    if (secondaryController.getAButtonReleased()) {
       turretSys.setToManuel();
     }
 
@@ -83,7 +87,12 @@ public class DefaultTurret extends CommandBase {
     }
 
     // turretSys.setTurretAim(secondaryController.getLeftX());
-    turretSys.setTurretAngle(turretSys.getTurretAngle() + turretControl * 77);
+    if (turretSys.getAimMode() == TurretPIDMode.manuelMode) {
+      turretSys.setTurretAngle(turretSys.getTurretAngle() + turretControl * 77);
+    } else {
+      turretSys.setTurretAngle(turretSys.getTurretAngle() + limelight.getX() * 2);
+
+    }
 
     if (turretSys.isReadyToShoot()) {
       // if (secondaryController.getStartButton()) {

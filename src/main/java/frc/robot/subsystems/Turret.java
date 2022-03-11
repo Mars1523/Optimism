@@ -8,6 +8,8 @@ import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import org.opencv.core.Mat;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Encoder;
@@ -27,7 +29,7 @@ public class Turret extends SubsystemBase {
 
   private final Encoder encoder = new Encoder(0, 1, true);
   private final PIDController manuelPidC = new PIDController(0.00086, 0, 0);
-  private final PIDController limelightPidC = new PIDController(0.00075, 0, 0);
+  private final PIDController limelightPidC = new PIDController(0.00086, 0, 0);
 
   private final ComplexWidget turetAngleEntry = Shuffleboard.getTab("Debug").add("Turret Angle", encoder);
   private final ComplexWidget turetPidEntry = Shuffleboard.getTab("Debug").add("Turret PID", manuelPidC);
@@ -54,7 +56,10 @@ public class Turret extends SubsystemBase {
     velocPID.setFF(0.00018);
     velocPID.setOutputRange(-0.85, 0.1);
     this.limelight = limelight;
+  }
 
+  public TurretPIDMode getAimMode() {
+    return currentPIDMode;
   }
 
   private double getVelocity() {
@@ -111,7 +116,6 @@ public class Turret extends SubsystemBase {
   }
 
   public void setTurretAngle(double numBer) {
-    System.out.println(numBer);
     manuelPidC.setSetpoint(MathUtil.clamp(numBer, -3600, 3600));
   }
 
@@ -147,7 +151,6 @@ public class Turret extends SubsystemBase {
 
   @Override
   public void periodic() {
-    System.out.println(pidSetpoint);
 
     double manuelPidOutput = manuelPidC.calculate(encoder.getDistance());
 
@@ -156,11 +159,11 @@ public class Turret extends SubsystemBase {
     // double limelightPidOutput = limelightPidC.calculate(limelight.getX());
 
     // if (currentPIDMode == TurretPIDMode.manuelMode) {
+    // System.out.println("manuel!!");
     turretTurn.set(manuelPidOutput * 0.85);
-    // }
-
-    // else if (currentPIDMode == TurretPIDMode.limelightMode) {
-    // turretTurn.set(limelightPidOutput * 0.8);
+    // } else if (currentPIDMode == TurretPIDMode.limelightMode) {
+    // // System.out.println("turret: " + limelightPidOutput);
+    // turretTurn.set(MathUtil.clamp(-limelightPidOutput, -.5, .5));
     // }
   }
 }
