@@ -92,7 +92,7 @@ public class DefaultDrive extends CommandBase {
     output = filter.calculate(output);
     turnOutput = filterTurn.calculate(turnOutput);
 
-    if (primaryController.getLeftTriggerAxis() > 0.1) {
+    if (secondaryController.getAButton()) {
 
       drivetrain.driveRaw(0,
           MathUtil.clamp(turnOutput, -.2, .2));
