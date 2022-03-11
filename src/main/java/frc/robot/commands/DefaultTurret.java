@@ -67,7 +67,7 @@ public class DefaultTurret extends CommandBase {
       turretSys.setToLimelight();
       leftTriggerActivated = true;
     } else if (leftTriggerActivated) {
-      turretSys.shooterOff();
+      turretSys.setToManuel();
       leftTriggerActivated = false;
     }
 
