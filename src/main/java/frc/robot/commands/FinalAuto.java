@@ -4,41 +4,60 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
-import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj.AddressableLED;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.IntakeTransport;
 import frc.robot.subsystems.Turret;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class FinalAuto extends SequentialCommandGroup {
-  /** Creates a new FinalAuto. */
-  public FinalAuto(Drivetrain drivetrain, Turret turret) {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
-    // new Timeout
+public class FinalAuto extends CommandBase {
 
-    addCommands(
-        // new DriveForward(drivetrain, 1.3),
-        new ParallelRaceGroup(new RunCommand(() -> {
+  Drivetrain drivetrain;
+  DriveForward driveForward;
+  Turret turret;
+  IntakeTransport intake;
 
-          if (drivetrain.getDistance() < 1.3) {
-            drivetrain.driveRaw(0.2, 0);
-          } else if (drivetrain.getDistance() > 1.3) {
-            drivetrain.driveRaw(0, 0);
-            turret.shooterOn(3000);
-            if (turret.isReadyToShoot()) {
-              // if (secondaryController.getStartButton()) {
-              double liftSpeed = -0.8;
-              turret.setLift(liftSpeed);
-            } else {
-              turret.setLift(0);
-            }
-          }
-        }, turret)
+  /** Creates a new FinalAuto2. */
+  public FinalAuto(DriveForward driveForward, Drivetrain drivetrain, Turret turret, IntakeTransport intake) {
 
-        ));
+    addRequirements(drivetrain);
+    this.drivetrain = drivetrain;
+    this.driveForward = driveForward;
+    this.turret = turret;
+    this.intake = intake;
+  }
+
+  // Called when the command is initially scheduled.
+  @Override
+  public void initialize() {
+  }
+
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {
+
+    new SequentialCommandGroup(
+        new DriveForward(drivetrain, 1),
+        new ParallelCommandGroup(
+            new IntakeAutoOn(intake).withTimeout(0.1),
+            new AutoLimelightShoot(turret, false).withTimeout(3.5),
+            new DriveForward(drivetrain, 0.7)),
+        new IntakeAutoOff(intake).withTimeout(0.1),
+        new AutoShoot(turret, true).withTimeout(0.1)).schedule();
+
+  }
+
+  // Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted) {
+  }
+
+  // Returns true when the command should end.
+  @Override
+  public boolean isFinished() {
+    return false;
   }
 }
