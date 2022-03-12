@@ -45,11 +45,11 @@ public class FinalAuto extends CommandBase {
   public void execute() {
 
     new SequentialCommandGroup(
-        new DriveForward(drivetrain, 1),
+        new DriveForward(drivetrain, .8),
         new ParallelCommandGroup(
             new IntakeAutoOn(intake).withTimeout(0.1),
             new AutoLimelightShoot(turret, limelight, false).withTimeout(5.5),
-            new DriveForward(drivetrain, 0.7)),
+            new DriveForward(drivetrain, 0.5)),
         new IntakeAutoOff(intake).withTimeout(0.1),
         new AutoShoot(turret, true).withTimeout(0.1)).schedule();
 

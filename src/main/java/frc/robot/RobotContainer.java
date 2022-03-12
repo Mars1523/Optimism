@@ -42,7 +42,7 @@ public class RobotContainer {
   private final DefaultDrive defaultDrive = new DefaultDrive(drivetrain, primaryController, limelight,
       secondaryController);
   private final DefaultArms defaultArms = new DefaultArms(arms, secondaryController);
-  private final DefaultTurret defaultTurret = new DefaultTurret(secondaryController, turret, primaryController,
+  private final DefaultTurret defaultTurret = new DefaultTurret(secondaryController, turret, intrans, primaryController,
       limelight);
   private final DefaultIntakeTransport defaultIntakeTransport = new DefaultIntakeTransport(primaryController, intrans);
 

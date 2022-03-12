@@ -80,7 +80,7 @@ public class Turret extends SubsystemBase {
   }
 
   public void shooterLower() {
-    shooterOn(1850);
+    shooterOn(1500);
   }
 
   public void shooterHigh() {
@@ -104,7 +104,7 @@ public class Turret extends SubsystemBase {
   }
 
   public void shooterBack() {
-    vertTransport.set(0.5);
+    vertTransport.set(0.9);
   }
 
   public void setTurretAim(double speed) {
@@ -132,7 +132,7 @@ public class Turret extends SubsystemBase {
 
     double area = limelight.getArea();
 
-    double distance = 80.66 + -56.7 * Math.log(area);// 180 * Math.exp(-0.856) * area;
+    double distance = 80.66 + -70 * Math.log(area);// 180 * Math.exp(-0.856) * area;
     double rpm = 15 * distance + 1750;
     rpm = -rpm;
 
