@@ -105,6 +105,7 @@ public class DefaultTurret extends CommandBase {
       intakeTransport.horizTransportOn();
     } else {
       turretSys.setLift(0);
+      intakeTransport.horizTransportOff();
     }
 
     if (primaryController.getAButton() == true) {

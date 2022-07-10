@@ -12,6 +12,7 @@ import org.opencv.core.Mat;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.PWMTalonSRX;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
@@ -40,7 +41,10 @@ public class Turret extends SubsystemBase {
 
   private TurretPIDMode currentPIDMode = TurretPIDMode.manuelMode;
 
-  private SparkMaxPIDController velocPID = turretWheel.getPIDController();
+  // private SparkMaxPIDController velocPID = turretWheel.getPIDController();
+  private final SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(-0.061147, 0.13446, 0.019562);
+  private final PIDController pid = new PIDController(1.2563E-06, 0, 0);
+
 
   private double pidSetpoint = 0;
 
@@ -50,11 +54,6 @@ public class Turret extends SubsystemBase {
 
     turretWheel.restoreFactoryDefaults();
     turretWheel.setIdleMode(IdleMode.kCoast);
-    velocPID.setP(0.00024);
-    velocPID.setI(0);
-    velocPID.setD(0);
-    velocPID.setFF(0.00018);
-    velocPID.setOutputRange(-0.85, 0.1);
     this.limelight = limelight;
   }
 
@@ -68,11 +67,10 @@ public class Turret extends SubsystemBase {
   }
 
   public boolean isReadyToShoot() {
-
     double part1 = pidSetpoint - getVelocity();
     double part2 = Math.abs(part1);
 
-    if (part2 < 400 && pidSetpoint != 0) {
+    if (part2 < 100 && pidSetpoint != 0) {
       return true;
     } else {
       return false;
@@ -92,7 +90,7 @@ public class Turret extends SubsystemBase {
     // turretWheel.set(-0.6);
     pidSetpoint = -setPoint;
     System.out.println("ShootOn");
-    velocPID.setReference(pidSetpoint, ControlType.kVelocity);
+    // velocPID.setReference(pidSetpoint, ControlType.kVelocity);
   }
 
   public void shooterOff() {
@@ -100,7 +98,7 @@ public class Turret extends SubsystemBase {
     vertTransport.set(0);
     // turretWheel.set(0);
     pidSetpoint = 0;
-    velocPID.setReference(pidSetpoint, ControlType.kVelocity);
+    // velocPID.setReference(pidSetpoint, ControlType.kVelocity);
   }
 
   public void shooterBack() {
@@ -142,7 +140,7 @@ public class Turret extends SubsystemBase {
     pidSetpoint = rpm;
     System.out.println(distance + " : " + rpm);
     System.out.println("shootLimelight");
-    velocPID.setReference(pidSetpoint, ControlType.kVelocity);
+    // velocPID.setReference(pidSetpoint, ControlType.kVelocity);
   }
 
   public void setToLimelight() {
@@ -169,5 +167,11 @@ public class Turret extends SubsystemBase {
     // // System.out.println("turret: " + limelightPidOutput);
     // turretTurn.set(MathUtil.clamp(-limelightPidOutput, -.5, .5));
     // }
+
+    final double controlIn = pidSetpoint/60;
+    final double feedForwardResult = feedforward.calculate(controlIn);
+    
+    final double pidOut = pid.calculate(controlIn) + feedForwardResult;
+    turretWheel.setVoltage(pidOut);
   }
 }
