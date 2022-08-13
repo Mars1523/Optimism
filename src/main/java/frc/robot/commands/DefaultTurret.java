@@ -99,7 +99,7 @@ public class DefaultTurret extends CommandBase {
     }
 
     if (turretSys.isReadyToShoot()) {
-      // if (secondaryController.getStartButton()) {
+       if (primaryController.getXButton() && primaryController.getYButton()) {
       double liftSpeed = -0.8;
       turretSys.setLift(liftSpeed);
       intakeTransport.horizTransportOn();
@@ -107,6 +107,7 @@ public class DefaultTurret extends CommandBase {
       turretSys.setLift(0);
       intakeTransport.horizTransportOff();
     }
+  }
 
     if (primaryController.getAButton() == true) {
       turretSys.shooterBack();
