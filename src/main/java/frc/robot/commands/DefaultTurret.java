@@ -93,20 +93,18 @@ public class DefaultTurret extends CommandBase {
 
     // turretSys.setTurretAim(secondaryController.getLeftX());
     if (turretSys.getAimMode() == TurretPIDMode.manuelMode) {
-      turretSys.setTurretAngle(turretSys.getTurretAngle() + turretControl * 77);
+      turretSys.setTurretAngle(turretSys.getTurretAngle() + turretControl * 100);
     } else {
       turretSys.setTurretAngle(turretSys.getTurretAngle() + limelight.getX() * 2);
     }
 
     if (turretSys.isReadyToShoot()) {
-       if (primaryController.getXButton() && primaryController.getYButton()) {
       double liftSpeed = -0.8;
       turretSys.setLift(liftSpeed);
       intakeTransport.horizTransportOn();
-    } else {
+    } else if (!(primaryController.getXButton() || primaryController.getYButton() || primaryController.getLeftBumper())) {
       turretSys.setLift(0);
       intakeTransport.horizTransportOff();
-    }
   }
 
     if (primaryController.getAButton() == true) {
