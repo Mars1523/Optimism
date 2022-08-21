@@ -13,6 +13,8 @@ import org.opencv.core.Mat;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.filter.LinearFilter;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.PWMTalonSRX;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
@@ -35,6 +37,11 @@ public class Turret extends SubsystemBase {
   private final ComplexWidget turetAngleEntry = Shuffleboard.getTab("Debug").add("Turret Angle", encoder);
   private final ComplexWidget turetPidEntry = Shuffleboard.getTab("Debug").add("Turret PID", manuelPidC);
 
+
+  // if this doesn't work then delete this line below
+  LinearFilter filter = LinearFilter.singlePoleIIR(0.1, 0.02);
+
+
   public enum TurretPIDMode {
     limelightMode, manuelMode
   }
@@ -44,7 +51,6 @@ public class Turret extends SubsystemBase {
   // private SparkMaxPIDController velocPID = turretWheel.getPIDController();
   private final SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(-0.061147, 0.13446, 0.019562);
   private final PIDController pid = new PIDController(1.2563E-06, 0, 0);
-
 
   private double pidSetpoint = 0;
 
@@ -128,9 +134,13 @@ public class Turret extends SubsystemBase {
       return;
     }
 
-    double area = limelight.getArea();
+    double y = limelight.getY();
 
-    double distance = 80.66 + -70 * Math.log(area);// 180 * Math.exp(-0.856) * area;
+    // this should give better results when using limelight shooting, if not remove this line below and the 'yFiltered' variable
+    double yFiltered = filter.calculate(y);
+
+    double distance = 10.4 + (-0.466 * yFiltered) + (8.4 * Math.pow(10, -3) * Math.pow(yFiltered, 2));// 180 * Math.exp(-0.856) * area;
+
     double rpm = 15 * distance + 1750;
     rpm = -rpm;
 
@@ -168,9 +178,9 @@ public class Turret extends SubsystemBase {
     // turretTurn.set(MathUtil.clamp(-limelightPidOutput, -.5, .5));
     // }
 
-    final double controlIn = pidSetpoint/60;
+    final double controlIn = pidSetpoint / 60;
     final double feedForwardResult = feedforward.calculate(controlIn);
-    
+
     final double pidOut = pid.calculate(controlIn) + feedForwardResult;
     turretWheel.setVoltage(pidOut);
   }
