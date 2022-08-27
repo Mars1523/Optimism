@@ -107,13 +107,19 @@ public class DefaultTurret extends CommandBase {
       intakeTransport.horizTransportOff();
   }
 
-    if (primaryController.getAButton() == true) {
-      turretSys.shooterBack();
+    // if (primaryController.getAButton() == true) {
+    //   turretSys.shooterBack();
+    // }
+
+if (primaryController.getAButton() == true) {
+      turretSys.setTurretAngle(turretSys.getTurretAngle() + limelight.getX() * 2);
     }
 
-    if (primaryController.getAButtonReleased() == true) {
-      turretSys.shooterOff();
-    }
+    
+
+    // if (primaryController.getAButtonReleased() == true) {
+    //   turretSys.shooterOff();
+    // }
   }
 
   @Override

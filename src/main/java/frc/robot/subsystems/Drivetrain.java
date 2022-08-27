@@ -116,8 +116,10 @@ public class Drivetrain extends SubsystemBase {
 
   }
 
+
+  // change this if it doesn't work
   public void boringDrive(double xSpeed, double rotation) {
-    robotDrive.arcadeDrive(xSpeed, rotation);
+    robotDrive.arcadeDrive(xSpeed / 2, rotation / 2);
   }
 
   public void fancyDrive(double rot, double xSpeed) {
