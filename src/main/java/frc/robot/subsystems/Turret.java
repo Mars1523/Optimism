@@ -141,7 +141,7 @@ public class Turret extends SubsystemBase {
 
     double distance = 10.4 + (-0.466 * yFiltered) + (8.4 * Math.pow(10, -3) * Math.pow(yFiltered, 2));// 180 * Math.exp(-0.856) * area;
 
-    double rpm = 15 * distance + 1750;
+    double rpm = 15 * distance + 2700;
     rpm = -rpm;
 
     if (!Double.isFinite(rpm)) {
