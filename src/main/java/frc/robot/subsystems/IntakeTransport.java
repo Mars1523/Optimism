@@ -55,7 +55,7 @@ public class IntakeTransport extends SubsystemBase {
 
   public void wristDownBack() {
     frontSolenoid.set(Value.kForward);
-    intakeBack.set(0.8);
+    intakeBack.set(1);
     horizTransport.set(0.5);
   }
 
