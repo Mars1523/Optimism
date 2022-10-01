@@ -52,6 +52,12 @@ public class FinalAuto extends CommandBase {
             new AutoLimelightShoot(turret, limelight, false).withTimeout(5.5),
             new DriveForward(drivetrain, 0.5)),
         new IntakeAutoOff(intake).withTimeout(0.1),
+        new ParallelCommandGroup(
+          new IntakeAutoOff(intake).withTimeout(0.1),
+          new IntakeAutoOn(intake).withTimeout(0.1),
+          new IntakeAutoOff(intake).withTimeout(0.1),
+          new IntakeAutoOn(intake).withTimeout(0.1)
+          ),
         new AutoShoot(turret, true).withTimeout(0.1)).schedule();
 
   }
