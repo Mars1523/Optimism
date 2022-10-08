@@ -46,19 +46,19 @@ public class FinalAuto extends CommandBase {
   public void execute() {
 
     new SequentialCommandGroup(
-        new DriveForward(drivetrain, .8),
+        new DriveForward(drivetrain, .6),
         new ParallelCommandGroup(
             new IntakeAutoOn(intake).withTimeout(0.1),
             new AutoLimelightShoot(turret, limelight, false).withTimeout(5.5),
             new DriveForward(drivetrain, 0.5)),
         new IntakeAutoOff(intake).withTimeout(0.1),
-        new ParallelCommandGroup(
+        
           new IntakeAutoOff(intake).withTimeout(0.1),
-          new IntakeAutoOn(intake).withTimeout(0.1),
-          new IntakeAutoOff(intake).withTimeout(0.1),
-          new IntakeAutoOn(intake).withTimeout(0.1)
-          ),
-        new AutoShoot(turret, true).withTimeout(0.1)).schedule();
+          new IntakeAutoOn(intake).withTimeout(0.2),
+          new IntakeAutoOff(intake).withTimeout(0.2),
+          new IntakeAutoOn(intake).withTimeout(0.2),
+          new IntakeAutoOff(intake).withTimeout(0.2),
+        new AutoShoot(turret, true).withTimeout(0.3)).schedule();
 
   }
 
