@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeTransport extends SubsystemBase {
 
-  // 15+16 were for the spinny bars at the bottom of the intake 
-  // 19+20 grouped these motors so they would move in the same way at the same time
-  // 17+20+21 are commented because someebody forgot to check the weight limit so 
+  // 19+20 were for the spinny bars at the bottom of the intake 
+  // 22+23 grouped these motors so they would move in the same way at the same time
+  // 19+22+23 are commented because someebody forgot to check the weight limit so 
   // we had to remove the second intake :(
   
   // private final Spark intakeFront = new Spark(0);
